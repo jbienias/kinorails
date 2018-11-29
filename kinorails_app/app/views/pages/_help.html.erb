@@ -1,1 +1,9 @@
 <p>Init</p>
+<% if user_signed_in? %>
+  <% if user.user? %>
+    <p> Jesteś user </p>
+  <% end %>
+  <% if user.admin? %>
+    <p> Jesteś admin </p>
+  <% end %>
+<% end %>
