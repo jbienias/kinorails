@@ -27,7 +27,7 @@ ActiveRecord::Schema.define(version: 2018_11_29_223702) do
     t.datetime "remember_created_at"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.string "login", default: "", null: false
+    t.string "username", default: "", null: false
     t.string "name", default: "", null: false
     t.string "surname", default: "", null: false
     t.string "phone_number", default: "", null: false
