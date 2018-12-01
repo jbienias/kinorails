@@ -1,0 +1,27 @@
+<%= form_with(model: reserved_seat, local: true) do |form| %>
+  <% if reserved_seat.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(reserved_seat.errors.count, "error") %> prohibited this reserved_seat from being saved:</h2>
+
+      <ul>
+      <% reserved_seat.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= form.label :reservation_id %>
+    <%= form.number_field :reservation_id %>
+  </div>
+
+  <div class="field">
+    <%= form.label :seat_id %>
+    <%= form.number_field :seat_id %>
+  </div>
+
+  <div class="actions">
+    <%= form.submit %>
+  </div>
+<% end %>

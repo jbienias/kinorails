@@ -1,0 +1,2 @@
+class ReservedSeat < ApplicationRecord
+end
