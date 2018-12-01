@@ -15,9 +15,7 @@
     <% @favourite_movies.each do |favourite_movie| %>
       <tr>
         <td><%= favourite_movie.user_id %></td>
-        <td><%= favourite_movie.movie_id %></td>
-        <td><%= link_to 'Show', favourite_movie %></td>
-        <td><%= link_to 'Edit', edit_favourite_movie_path(favourite_movie) %></td>
+        <td><%= favourite_movie.movie.title %></td>
         <td><%= link_to 'Destroy', favourite_movie, method: :delete, data: { confirm: 'Are you sure?' } %></td>
       </tr>
     <% end %>

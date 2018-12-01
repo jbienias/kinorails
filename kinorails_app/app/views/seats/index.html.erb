@@ -15,12 +15,10 @@
   <tbody>
     <% @seats.each do |seat| %>
       <tr>
-        <td><%= seat.room_id %></td>
+        <td><%= seat.room.name %></td>
         <td><%= seat.pos_x %></td>
         <td><%= seat.pos_y %></td>
         <td><%= link_to 'Show', seat %></td>
-        <td><%= link_to 'Edit', edit_seat_path(seat) %></td>
-        <td><%= link_to 'Destroy', seat, method: :delete, data: { confirm: 'Are you sure?' } %></td>
       </tr>
     <% end %>
   </tbody>
@@ -28,4 +26,4 @@
 
 <br>
 
-<%= link_to 'New Seat', new_seat_path %>
+<%= link_to 'New Seat (temporary)', new_seat_path %>

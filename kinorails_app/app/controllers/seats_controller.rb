@@ -1,6 +1,5 @@
 class SeatsController < ApplicationController
-  #before_action :authenticate_user!
-  before_action :set_seat, only: [:show, :edit, :update, :destroy]
+  before_action :set_seat, only: [:show, :destroy]
 
   def index
     @seats = Seat.all
@@ -11,13 +10,12 @@ class SeatsController < ApplicationController
 
   def new
     @seat = Seat.new
-  end
-
-  def edit
+    @rooms = Room.all.order(:name)
   end
 
   def create
     @seat = Seat.new(seat_params)
+    @rooms = Room.all.order(:name)
 
     respond_to do |format|
       if @seat.save
@@ -25,18 +23,6 @@ class SeatsController < ApplicationController
         format.json { render :show, status: :created, location: @seat }
       else
         format.html { render :new }
-        format.json { render json: @seat.errors, status: :unprocessable_entity }
-      end
-    end
-  end
-
-  def update
-    respond_to do |format|
-      if @seat.update(seat_params)
-        format.html { redirect_to @seat, notice: 'Seat was successfully updated.' }
-        format.json { render :show, status: :ok, location: @seat }
-      else
-        format.html { render :edit }
         format.json { render json: @seat.errors, status: :unprocessable_entity }
       end
     end

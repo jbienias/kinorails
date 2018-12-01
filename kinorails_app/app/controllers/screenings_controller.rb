@@ -11,14 +11,19 @@ class ScreeningsController < ApplicationController
 
   def new
     @screening = Screening.new
+    @movies = Movie.all.order(:title)
+    @rooms = Room.all.order(:name)
   end
 
   def edit
+    @movies = Movie.all.order(:title)
+    @rooms = Room.all.order(:name)
   end
 
   def create
     @screening = Screening.new(screening_params)
-
+    @movies = Movie.all.order(:title)
+    @rooms = Room.all.order(:name)
     respond_to do |format|
       if @screening.save
         format.html { redirect_to @screening, notice: 'Screening was successfully created.' }

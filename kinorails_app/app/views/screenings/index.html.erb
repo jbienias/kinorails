@@ -15,8 +15,8 @@
   <tbody>
     <% @screenings.each do |screening| %>
       <tr>
-        <td><%= screening.movie_id %></td>
-        <td><%= screening.room_id %></td>
+        <td><%= screening.movie.title %></td>
+        <td><%= screening.room.name %></td>
         <td><%= screening.date %></td>
         <td><%= link_to 'Show', screening %></td>
         <td><%= link_to 'Edit', edit_screening_path(screening) %></td>

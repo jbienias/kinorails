@@ -17,7 +17,11 @@ class RoomsController < ApplicationController
   end
 
   def create
-    @room = Room.new(room_params)
+    @room = Room.new(room_params_create)
+
+    #TODO
+    #When the room is created, we have to also create it's seats
+    #accordingly to existing file located in layout_file_path...
 
     respond_to do |format|
       if @room.save
@@ -32,7 +36,7 @@ class RoomsController < ApplicationController
 
   def update
     respond_to do |format|
-      if @room.update(room_params)
+      if @room.update(room_params_update)
         format.html { redirect_to @room, notice: 'Room was successfully updated.' }
         format.json { render :show, status: :ok, location: @room }
       else
@@ -43,6 +47,8 @@ class RoomsController < ApplicationController
   end
 
   def destroy
+    #Remember to add cascade delete to seats, etc.
+    #Example: Seat.where(:room_id => @room.id).destroy_all
     @room.destroy
     respond_to do |format|
       format.html { redirect_to rooms_url, notice: 'Room was successfully destroyed.' }
@@ -55,7 +61,11 @@ class RoomsController < ApplicationController
       @room = Room.find(params[:id])
     end
 
-    def room_params
+    def room_params_create
+      params.require(:room).permit(:name, :layout_file_path)
+    end
+
+    def room_params_update
       params.require(:room).permit(:name)
     end
 end
