@@ -11,6 +11,8 @@ class ReservedSeatsController < ApplicationController
 
   def new
     @reserved_seat = ReservedSeat.new
+    @reservations = Reservation.all
+    @seats = Seat.all
   end
 
   def edit
@@ -25,18 +27,6 @@ class ReservedSeatsController < ApplicationController
         format.json { render :show, status: :created, location: @reserved_seat }
       else
         format.html { render :new }
-        format.json { render json: @reserved_seat.errors, status: :unprocessable_entity }
-      end
-    end
-  end
-
-  def update
-    respond_to do |format|
-      if @reserved_seat.update(reserved_seat_params)
-        format.html { redirect_to @reserved_seat, notice: 'Reserved seat was successfully updated.' }
-        format.json { render :show, status: :ok, location: @reserved_seat }
-      else
-        format.html { render :edit }
         format.json { render json: @reserved_seat.errors, status: :unprocessable_entity }
       end
     end

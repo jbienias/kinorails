@@ -2,7 +2,7 @@
 
 <p>
   <strong>User:</strong>
-  <%= @reservation.user_id %>
+  <%= @reservation.user.username %>
 </p>
 
 <p>
@@ -15,5 +15,8 @@
   <%= @reservation.identifier %>
 </p>
 
-<%= link_to 'Edit', edit_reservation_path(@reservation) %> |
+<p>
+  <strong> Reserved seats: </strong>
+</p>
+
 <%= link_to 'Back', reservations_path %>

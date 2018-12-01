@@ -13,12 +13,12 @@
 
   <div class="field">
     <%= form.label :reservation_id %>
-    <%= form.number_field :reservation_id %>
+    <%= form.collection_select :reservation_id, @reservations, :id, :id, include_blank: true %>
   </div>
 
   <div class="field">
     <%= form.label :seat_id %>
-    <%= form.number_field :seat_id %>
+    <%= form.collection_select :seat_id, @seats, :id, :id, include_blank: true %>
   </div>
 
   <div class="actions">

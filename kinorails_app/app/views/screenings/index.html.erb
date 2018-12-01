@@ -5,6 +5,7 @@
 <table>
   <thead>
     <tr>
+      <th>ID</th>
       <th>Movie</th>
       <th>Room</th>
       <th>Date</th>
@@ -15,6 +16,7 @@
   <tbody>
     <% @screenings.each do |screening| %>
       <tr>
+        <td><%= screening.id %></td>
         <td><%= screening.movie.title %></td>
         <td><%= screening.room.name %></td>
         <td><%= screening.date %></td>

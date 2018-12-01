@@ -12,18 +12,8 @@
   <% end %>
 
   <div class="field">
-    <%= form.label :user_id %>
-    <%= form.number_field :user_id %>
-  </div>
-
-  <div class="field">
     <%= form.label :screening_id %>
-    <%= form.number_field :screening_id %>
-  </div>
-
-  <div class="field">
-    <%= form.label :identifier %>
-    <%= form.text_field :identifier %>
+    <%= form.collection_select :screening_id, @screenings, :id, :id, include_blank: true %>
   </div>
 
   <div class="actions">
