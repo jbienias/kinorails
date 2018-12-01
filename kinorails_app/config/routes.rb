@@ -1,4 +1,10 @@
 Rails.application.routes.draw do
+  resources :reserved_seats
+  resources :favourite_movies
+  resources :reservations
+  resources :screenings
+  resources :seats
+  resources :movies
   devise_for :users
   resources :rooms
 
