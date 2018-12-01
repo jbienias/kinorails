@@ -16,24 +16,16 @@ class SeatsController < ApplicationController
   def create
     @seat = Seat.new(seat_params)
     @rooms = Room.all.order(:name)
-
-    respond_to do |format|
-      if @seat.save
-        format.html { redirect_to @seat, notice: 'Seat was successfully created.' }
-        format.json { render :show, status: :created, location: @seat }
-      else
-        format.html { render :new }
-        format.json { render json: @seat.errors, status: :unprocessable_entity }
-      end
+    if @seat.save
+      redirect_to @seat, notice: 'Seat was successfully created.'
+    else
+      render :new
     end
   end
 
   def destroy
     @seat.destroy
-    respond_to do |format|
-      format.html { redirect_to seats_url, notice: 'Seat was successfully destroyed.' }
-      format.json { head :no_content }
-    end
+    redirect_to seats_url, notice: 'Seat was successfully destroyed.'
   end
 
   private

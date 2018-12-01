@@ -19,7 +19,7 @@ class ReservationsController < ApplicationController
     @reservation = Reservation.new(reservation_params)
     #TMP :
     if current_user.id
-      @reservation.user_id = current_user.id  
+      @reservation.user_id = current_user.id
     end
     #TODO
     #@reservation.identifier = generate()
@@ -29,23 +29,16 @@ class ReservationsController < ApplicationController
     #else #guest session
       #show the identifier to the guest (same page/different page, whatever :P)
     #end
-    respond_to do |format|
-      if @reservation.save
-        format.html { redirect_to @reservation, notice: 'Reservation was successfully created.' }
-        format.json { render :show, status: :created, location: @reservation }
-      else
-        format.html { render :new }
-        format.json { render json: @reservation.errors, status: :unprocessable_entity }
-      end
+    if @reservation.save
+      redirect_to @reservation, notice: 'Reservation was successfully created.'
+    else
+      render :new
     end
   end
 
   def destroy
     @reservation.destroy
-    respond_to do |format|
-      format.html { redirect_to reservations_url, notice: 'Reservation was successfully destroyed.' }
-      format.json { head :no_content }
-    end
+    redirect_to reservations_url, notice: 'Reservation was successfully destroyed.'
   end
 
   private

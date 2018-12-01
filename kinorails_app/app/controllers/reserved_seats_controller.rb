@@ -20,24 +20,16 @@ class ReservedSeatsController < ApplicationController
 
   def create
     @reserved_seat = ReservedSeat.new(reserved_seat_params)
-
-    respond_to do |format|
-      if @reserved_seat.save
-        format.html { redirect_to @reserved_seat, notice: 'Reserved seat was successfully created.' }
-        format.json { render :show, status: :created, location: @reserved_seat }
-      else
-        format.html { render :new }
-        format.json { render json: @reserved_seat.errors, status: :unprocessable_entity }
-      end
+    if @reserved_seat.save
+      redirect_to @reserved_seat, notice: 'Reserved seat was successfully created.'
+    else
+      render :new
     end
   end
 
   def destroy
     @reserved_seat.destroy
-    respond_to do |format|
-      format.html { redirect_to reserved_seats_url, notice: 'Reserved seat was successfully destroyed.' }
-      format.json { head :no_content }
-    end
+    redirect_to reserved_seats_url, notice: 'Reserved seat was successfully destroyed.'
   end
 
   private

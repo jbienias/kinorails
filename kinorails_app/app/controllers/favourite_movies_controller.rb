@@ -6,9 +6,6 @@ class FavouriteMoviesController < ApplicationController
     @favourite_movies = FavouriteMovie.all
   end
 
-  def show
-  end
-
   def new
     @favourite_movie = FavouriteMovie.new
     @movies = Movie.all.order(:title)
@@ -18,23 +15,16 @@ class FavouriteMoviesController < ApplicationController
     @movies = Movie.all.order(:title)
     @favourite_movie = FavouriteMovie.new(favourite_movie_params)
     @favourite_movie.user_id = current_user.id
-    respond_to do |format|
-      if @favourite_movie.save
-        format.html { redirect_to @favourite_movie, notice: 'Favourite movie was successfully created.' }
-        format.json { render :show, status: :created, location: @favourite_movie }
-      else
-        format.html { render :new }
-        format.json { render json: @favourite_movie.errors, status: :unprocessable_entity }
-      end
+    if @favourite_movie.save
+      redirect_to favourite_movies_url, notice: 'Favourite movie was successfully created.'
+    else
+      render :new
     end
   end
 
   def destroy
     @favourite_movie.destroy
-    respond_to do |format|
-      format.html { redirect_to favourite_movies_url, notice: 'Favourite movie was successfully destroyed.' }
-      format.json { head :no_content }
-    end
+    redirect_to favourite_movies_url, notice: 'Favourite movie was successfully destroyed.'
   end
 
   private

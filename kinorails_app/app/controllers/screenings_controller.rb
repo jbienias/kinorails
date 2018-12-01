@@ -24,35 +24,24 @@ class ScreeningsController < ApplicationController
     @screening = Screening.new(screening_params)
     @movies = Movie.all.order(:title)
     @rooms = Room.all.order(:name)
-    respond_to do |format|
-      if @screening.save
-        format.html { redirect_to @screening, notice: 'Screening was successfully created.' }
-        format.json { render :show, status: :created, location: @screening }
-      else
-        format.html { render :new }
-        format.json { render json: @screening.errors, status: :unprocessable_entity }
-      end
+    if @screening.save
+      redirect_to @screening, notice: 'Screening was successfully created.'
+    else
+      render :new
     end
   end
 
   def update
-    respond_to do |format|
-      if @screening.update(screening_params)
-        format.html { redirect_to @screening, notice: 'Screening was successfully updated.' }
-        format.json { render :show, status: :ok, location: @screening }
-      else
-        format.html { render :edit }
-        format.json { render json: @screening.errors, status: :unprocessable_entity }
-      end
+    if @screening.update(screening_params)
+      redirect_to @screening, notice: 'Screening was successfully updated.'
+    else
+      render :edit
     end
   end
 
   def destroy
     @screening.destroy
-    respond_to do |format|
-      format.html { redirect_to screenings_url, notice: 'Screening was successfully destroyed.' }
-      format.json { head :no_content }
-    end
+    redirect_to screenings_url, notice: 'Screening was successfully destroyed.'
   end
 
   private
