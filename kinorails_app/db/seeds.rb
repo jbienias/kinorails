@@ -21,3 +21,26 @@ user_list = [
 user_list.each do |email, password, created_at, updated_at, username, role|
   User.create!(email: email, password: password, created_at: created_at, updated_at: updated_at, username: username, role: role)
 end
+
+movie_list = [
+  # movie one
+  ["Gwiezdne wojny: Ostatni Jedi",
+    "Rian Johnson",
+    "USA",
+    152,
+    "https://0.allegroimg.com/s512/03fca1/c986b7d4434ea9e725719d5a8c60",
+    "Test description for Last Jedi",
+    "2018-12-02 15:00:00.132610", "2018-12-02 15:00:00.132610"],
+  # movie two
+  ["Chłopaki nie płaczą",
+    "Olaf Lubaszenko",
+    "Polska",
+    96,
+    "https://i1.fdbimg.pl/8xpsmk/570x800_kn00uh.jpg",
+    "Test description for Chłopaki nie płaczą",
+    "2018-12-02 15:00:00.132611", "2018-12-02 15:00:00.132611"],
+]
+
+movie_list.each do |title, director, country_of_origin, length, poster_link, description, created_at, updated_at|
+  Movie.create!(title: title, director: director, country_of_origin: country_of_origin, length: length, poster_link: poster_link, description: description, created_at: created_at, updated_at: updated_at)
+end
