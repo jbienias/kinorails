@@ -1,0 +1,22 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>User:</strong>
+  <%= @reservation.user.username %>
+</p>
+
+<p>
+  <strong>Screening:</strong>
+  <%= @reservation.screening_id %>
+</p>
+
+<p>
+  <strong>Identifier:</strong>
+  <%= @reservation.identifier %>
+</p>
+
+<p>
+  <strong> Reserved seats: </strong>
+</p>
+
+<%= link_to 'Back', reservations_path %>

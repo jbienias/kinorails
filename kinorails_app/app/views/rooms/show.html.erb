@@ -1,12 +1,11 @@
 <p>
-  <strong>Seats:</strong>
-  <%= @room.seats %>
+  <strong>Name:</strong>
+  <%= @room.name %>
 </p>
 
 <p>
-  <strong>Plan:</strong>
-  <%= @room.plan %>
+  <strong>Layout file path:</strong>
+  <%= @room.layout_file_path %>
 </p>
-
 <%= link_to 'Edit', edit_room_path(@room) %> |
 <%= link_to 'Back', rooms_path %>

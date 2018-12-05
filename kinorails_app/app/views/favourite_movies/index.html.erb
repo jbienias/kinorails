@@ -1,0 +1,27 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Favourite Movies</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>User</th>
+      <th>Movie</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @favourite_movies.each do |favourite_movie| %>
+      <tr>
+        <td><%= favourite_movie.user_id %></td>
+        <td><%= favourite_movie.movie.title %></td>
+        <td><%= link_to 'Destroy', favourite_movie, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Favourite Movie', new_favourite_movie_path %>
