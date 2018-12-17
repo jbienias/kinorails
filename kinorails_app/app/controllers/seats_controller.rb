@@ -13,6 +13,7 @@ class SeatsController < ApplicationController
     @rooms = Room.all.order(:name)
   end
 
+=begin
   def create
     @seat = Seat.new(seat_params)
     @rooms = Room.all.order(:name)
@@ -22,6 +23,7 @@ class SeatsController < ApplicationController
       render :new
     end
   end
+=end
 
   def destroy
     @seat.destroy
