@@ -13,7 +13,6 @@
 <table>
   <thead>
     <tr>
-      <th>ID</th>
       <th> Pos. x </th>
       <th> Pos. y </th>
       <th> Type of seat </th>
@@ -23,7 +22,6 @@
   <tbody>
     <% @seats.each do |seat| %>
       <tr>
-        <td><%= seat.id %></td>
         <td><%= seat.pos_x %></td>
         <td><%= seat.pos_y %></td>
         <td><%= seat.type_of_seat %></td>
@@ -31,5 +29,11 @@
     <% end %>
   </tbody>
 </table>
+
+
+Chuj
+
+<%= @plan %>
+
 <%= link_to 'Edit', edit_room_path(@room) %> |
 <%= link_to 'Back', rooms_path %>

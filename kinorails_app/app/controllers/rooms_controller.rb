@@ -8,6 +8,24 @@ class RoomsController < ApplicationController
 
   def show
     @seats = (Seat.all.where(:room_id => @room.id)).to_a
+    @plan = convert_to_a
+  end
+
+  def convert_to_a
+    max_x = @seats[-1].pos_x
+    max_y = @seats.max_by(&:pos_y).pos_y
+
+    @plan = Array.new(max_y + 1) { Array.new(max_x + 1) }
+
+    @seats.each do |s|
+      @plan[s.pos_y][s.pos_x] = s.type_of_seat # =
+    end
+
+    @plan.length.times do |i|
+      @plan[i] = @plan[i].map {|e| e.nil? ? 0 : e}
+    end
+
+    @plan
   end
 
   def new
@@ -77,7 +95,7 @@ class RoomsController < ApplicationController
       seat.pos_x = pos_x
       seat.pos_y = pos_y
       seat.room_id = room_id
-      if type.between?(0,2)
+      if type.between?(0,1)
         seat.type_of_seat = type
       else
         seat.type_of_seat = 0

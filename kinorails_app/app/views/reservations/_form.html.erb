@@ -11,25 +11,30 @@
     </div>
   <% end %>
 
-<strong> Reservation for... </strong>
-<p>
-  <strong>Movie:</strong>
-  <%= @screening.movie.title %>
-</p>
 
-<p>
-  <strong>Room:</strong>
-  <%= @screening.room.name %>
-</p>
+  <strong> Reservation for... </strong>
+  <p>
+    <strong>Movie:</strong>
+    <%= @screening.movie.title %>
+  </p>
 
-<p>
-  <strong>Date:</strong>
-  <%= @screening.date %>
-</p>
+  <p>
+    <strong>Room:</strong>
+    <%= @screening.room.name %>
+  </p>
 
-<strong>Select your seats : </strong>
+  <p>
+    <strong>Date:</strong>
+    <%= @screening.date %>
+  </p>
 
+  <strong>Select your seats : </strong>
+
+  <%= form_for @reservation, method: :post do |f| %>
+  <%= f.hidden_field :reservation, :value => @reservation %>
+  <%= f.hidden_field :screening_id, :value => @screening.id %>
   <div class="actions">
     <%= form.submit %>
   </div>
+  <% end %>
 <% end %>

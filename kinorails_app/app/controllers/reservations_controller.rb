@@ -10,7 +10,7 @@ class ReservationsController < ApplicationController
 
   def new
     @reservation = Reservation.new
-    @screening = Screening.find(params[:screening_id])
+    @screening = Screening.find(params[:current_screening_id])
   end
 
   def create
