@@ -2,7 +2,11 @@
 
 <p>
   <strong>User:</strong>
-  <%= @reservation.user.username %>
+  <% if @reservation.user_id == NIL %>
+    Guest
+  <% else %>
+    <%= @reservation.user.username %>
+  <%end%>
 </p>
 
 <p>

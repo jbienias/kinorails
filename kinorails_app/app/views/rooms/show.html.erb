@@ -1,3 +1,5 @@
+<p id="notice"><%= notice %></p>
+
 <p>
   <strong>Name:</strong>
   <%= @room.name %>
@@ -7,5 +9,27 @@
   <strong>Layout file path:</strong>
   <%= @room.layout_file_path %>
 </p>
+
+<table>
+  <thead>
+    <tr>
+      <th>ID</th>
+      <th> Pos. x </th>
+      <th> Pos. y </th>
+      <th> Type of seat </th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @seats.each do |seat| %>
+      <tr>
+        <td><%= seat.id %></td>
+        <td><%= seat.pos_x %></td>
+        <td><%= seat.pos_y %></td>
+        <td><%= seat.type_of_seat %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
 <%= link_to 'Edit', edit_room_path(@room) %> |
 <%= link_to 'Back', rooms_path %>

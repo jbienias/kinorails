@@ -7,6 +7,7 @@ class RoomsController < ApplicationController
   end
 
   def show
+    @seats = (Seat.all.where(:room_id => @room.id)).to_a
   end
 
   def new
@@ -18,23 +19,25 @@ class RoomsController < ApplicationController
 
   def create
     @room = Room.new(room_params_create)
-
-    #TODO
-    #When the room is created, we have to also create it's seats
-    #accordingly to existing file located in layout_file_path...
-
     if @room.save
       err_count = 0
-      for i in 1...5
-        for j in 'A'...'E'
-          @seat = create_seat(@room.id, i, j)
-          if @seat.save
+      seats_created = 0
+      arr = load_seats_location(@room.layout_file_path)
+
+      arr.each_with_index do |row, i|
+        row.each_with_index do |column, j|
+          @seat = create_seat(@room.id, i, j, convert_to_i(column))
+          tmp = @seat.save
+          if !tmp
             err_count += 1
+          else
+            seats_created += 1
           end
         end
       end
-      if @seat.save
-        redirect_to @room, notice: 'Room and Seat was successfully created.'
+
+      if err_count == 0
+        redirect_to @room, notice: "Room and #{seats_created} seats were successfully created."
       end
     else
       render :new
@@ -51,16 +54,34 @@ class RoomsController < ApplicationController
 
   def destroy
     Seat.where(:room_id => @room.id).destroy_all
+    Screening.where(:room_id => @room.id).destroy_all
     @room.destroy
     redirect_to rooms_url, notice: 'Room was successfully destroyed.'
   end
 
   private
-    def create_seat(room_id, pos_x, pos_y)
+    def load_seats_location(filename)
+      result = []
+      File.open(filename).each_line { |i|
+        result << i.chomp.split(" ")
+      }
+      result
+    end
+
+    def convert_to_i(str)
+      Integer(str) rescue 0
+    end
+
+    def create_seat(room_id, pos_x, pos_y, type)
       seat = Seat.new
       seat.pos_x = pos_x
       seat.pos_y = pos_y
       seat.room_id = room_id
+      if type.between?(0,2)
+        seat.type_of_seat = type
+      else
+        seat.type_of_seat = 0
+      end
       seat
     end
 

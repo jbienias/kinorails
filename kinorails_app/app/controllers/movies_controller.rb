@@ -34,6 +34,8 @@ class MoviesController < ApplicationController
   end
 
   def destroy
+    Screening.where(:movie_id => @movie.id).destroy_all
+    FavouriteMovie.where(:movie_id => @movie.id).destroy_all
     @movie.destroy
     redirect_to movies_url, notice: 'Movie was successfully destroyed.'
   end

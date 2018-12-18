@@ -18,10 +18,11 @@
       <tr>
         <td><%= screening.id %></td>
         <td><%= screening.movie.title %></td>
-        <td><%= screening.room.name %></td>
+        <td><%= screening.room_id %></td>
         <td><%= screening.date %></td>
         <td><%= link_to 'Show', screening %></td>
         <td><%= link_to 'Edit', edit_screening_path(screening) %></td>
+        <td><%= link_to 'New Reservation', {:controller => "reservations", :action => "new", :screening_id => screening.id, :reservation => @reservation } %></td>
         <td><%= link_to 'Destroy', screening, method: :delete, data: { confirm: 'Are you sure?' } %></td>
       </tr>
     <% end %>

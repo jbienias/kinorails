@@ -11,10 +11,23 @@
     </div>
   <% end %>
 
-  <div class="field">
-    <%= form.label :screening_id %>
-    <%= form.collection_select :screening_id, @screenings, :id, :id, include_blank: true %>
-  </div>
+<strong> Reservation for... </strong>
+<p>
+  <strong>Movie:</strong>
+  <%= @screening.movie.title %>
+</p>
+
+<p>
+  <strong>Room:</strong>
+  <%= @screening.room.name %>
+</p>
+
+<p>
+  <strong>Date:</strong>
+  <%= @screening.date %>
+</p>
+
+<strong>Select your seats : </strong>
 
   <div class="actions">
     <%= form.submit %>

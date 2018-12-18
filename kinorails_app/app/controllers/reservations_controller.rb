@@ -1,6 +1,4 @@
 class ReservationsController < ApplicationController
-  #before_action :authenticate_user! <- i guess we don't need this here, because
-  #both user and guest will be able to make a reservation
   before_action :set_reservation, only: [:show, :destroy]
 
   def index
@@ -12,23 +10,14 @@ class ReservationsController < ApplicationController
 
   def new
     @reservation = Reservation.new
-    @screenings = Screening.all.order(:id)
+    @screening = Screening.find(params[:screening_id])
   end
 
   def create
     @reservation = Reservation.new(reservation_params)
-    #TMP :
-    if current_user.id
+    if current_user != nil
       @reservation.user_id = current_user.id
     end
-    #TODO
-    #@reservation.identifier = generate()
-    #if current_user #user logged in
-      #@reservation.user_id = current_user.id
-      #redirect user to his reservations and show the newest one
-    #else #guest session
-      #show the identifier to the guest (same page/different page, whatever :P)
-    #end
     if @reservation.save
       redirect_to @reservation, notice: 'Reservation was successfully created.'
     else
@@ -37,6 +26,7 @@ class ReservationsController < ApplicationController
   end
 
   def destroy
+    ReservedSeat.where(:reservation_id => @reservation.id).destroy_all
     @reservation.destroy
     redirect_to reservations_url, notice: 'Reservation was successfully destroyed.'
   end

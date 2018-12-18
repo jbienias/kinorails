@@ -18,7 +18,11 @@
     <% @reservations.each do |reservation| %>
       <tr>
         <td><%= reservation.id %></td>
-        <td><%= reservation.user.username  %></td>
+        <% if reservation.user_id == NIL %>
+          <td>Guest</td>
+        <% else %>
+          <td><%= reservation.user.username  %></td>
+        <%end%>
         <td><%= reservation.screening_id %></td>
         <td><%= reservation.identifier %></td>
         <td> </td>
@@ -28,7 +32,3 @@
     <% end %>
   </tbody>
 </table>
-
-<br>
-
-<%= link_to 'New Reservation', new_reservation_path %>

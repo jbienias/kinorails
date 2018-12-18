@@ -14,7 +14,7 @@
   <tbody>
     <% @favourite_movies.each do |favourite_movie| %>
       <tr>
-        <td><%= favourite_movie.user_id %></td>
+        <td><%= favourite_movie.user.username %></td>
         <td><%= favourite_movie.movie.title %></td>
         <td><%= link_to 'Destroy', favourite_movie, method: :delete, data: { confirm: 'Are you sure?' } %></td>
       </tr>
