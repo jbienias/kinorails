@@ -68,15 +68,16 @@ class RoomsController < ApplicationController
             err_count += 1
           end
         end
-
         redirect_to @room, notice: "Room and #{seats_created} seats were successfully created."
       else
         Seat.where(:room_id => @room.id).destroy_all
         @room.destroy
-        render :new, notice: "Room could not be saved!"
+        flash[:notice] = "Room could not be saved!"
+        render :new
       end
     else
-      render :new, notice: 'Room could not be saved. Make sure that file is correct!'
+      flash.now[:notice] = 'Room could not be saved. Make sure that the file you provided is correct!'
+      render :new
     end
   end
 
