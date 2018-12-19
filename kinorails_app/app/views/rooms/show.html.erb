@@ -10,27 +10,27 @@
   <%= @room.layout_file_path %>
 </p>
 
-<table>
-  <thead>
-    <tr>
-      <th> Pos. x </th>
-      <th> Pos. y </th>
-      <th> Type of seat </th>
-    </tr>
-  </thead>
+</p>
 
+<p> -------PLAN--------- </p>
+
+<table>
   <tbody>
-    <% @seats.each do |seat| %>
+    <% @plan.length.times do |i| %>
       <tr>
-        <td><%= seat.pos_x %></td>
-        <td><%= seat.pos_y %></td>
-        <td><%= seat.type_of_seat %></td>
+      <% @plan[i].length.times do |j| %>
+          <% if @plan[i][j] == 1 %>
+            <%# seat = @seats.select {|s| s.pos_x == j && s.pos_y == i} %>
+            <td> X </td>
+          <% else %>
+            <td>  </td>
+          <% end %>
+      <% end %>
       </tr>
     <% end %>
   </tbody>
 </table>
 
-<%= @plan %>
 
 <%= link_to 'Edit', edit_room_path(@room) %> |
 <%= link_to 'Back', rooms_path %>
