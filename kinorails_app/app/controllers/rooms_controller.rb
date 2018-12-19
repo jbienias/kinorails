@@ -37,28 +37,46 @@ class RoomsController < ApplicationController
 
   def create
     @room = Room.new(room_params_create)
-    if @room.save
-      err_count = 0
-      seats_created = 0
-      arr = load_seats_location(@room.layout_file_path)
 
-      arr.each_with_index do |row, i|
-        row.each_with_index do |column, j|
-          @seat = create_seat(@room.id, i, j, convert_to_i(column))
-          tmp = @seat.save
-          if !tmp
-            err_count += 1
-          else
+    err_count = 0
+    seats_created = 0
+    arr = load_seats_location(@room.layout_file_path)
+    seat_arr = []
+
+    arr.each_with_index do |row, i|
+      row.each_with_index do |column, j|
+
+        type_of_seat_tmp = change_type_of_seat(arr[i][j])
+
+        if type_of_seat_tmp != -1
+          @seat = create_seat(j, i, type_of_seat_tmp)
+          seat_arr << @seat
+        else
+          err_count += 1
+        end
+
+      end
+    end
+
+    if err_count == 0
+      if @room.save
+        seat_arr.each do |s|
+          assign_room_id_to_seat(s, @room.id)
+          if s.save
             seats_created += 1
+          else
+            err_count += 1
           end
         end
-      end
 
-      if err_count == 0
         redirect_to @room, notice: "Room and #{seats_created} seats were successfully created."
+      else
+        Seat.where(:room_id => @room.id).destroy_all
+        @room.destroy
+        render :new, notice: "Room could not be saved!"
       end
     else
-      render :new
+      render :new, notice: 'Room could not be saved. Make sure that file is correct!'
     end
   end
 
@@ -86,21 +104,29 @@ class RoomsController < ApplicationController
       result
     end
 
-    def convert_to_i(str)
-      Integer(str) rescue 0
-    end
+#    def convert_to_i(str)
+#      Integer(str) rescue 0
+#    end
 
-    def create_seat(room_id, pos_x, pos_y, type)
+    def create_seat(pos_x, pos_y, type)
       seat = Seat.new
       seat.pos_x = pos_x
       seat.pos_y = pos_y
-      seat.room_id = room_id
-      if type.between?(0,1)
-        seat.type_of_seat = type
-      else
-        seat.type_of_seat = 0
-      end
+      seat.type_of_seat = type
       seat
+    end
+
+    def assign_room_id_to_seat(seat, room_id)
+      seat.room_id = room_id
+    end
+
+    def change_type_of_seat(type)
+      if type == "0" || type == "1"
+        type = type.to_i
+        type
+      else
+        -1 # raiseError
+      end
     end
 
     def set_room
