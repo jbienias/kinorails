@@ -105,10 +105,6 @@ class RoomsController < ApplicationController
       result
     end
 
-#    def convert_to_i(str)
-#      Integer(str) rescue 0
-#    end
-
     def create_seat(pos_x, pos_y, type)
       seat = Seat.new
       seat.pos_x = pos_x
@@ -126,7 +122,7 @@ class RoomsController < ApplicationController
         type = type.to_i
         type
       else
-        -1 # raiseError
+        -1
       end
     end
 
