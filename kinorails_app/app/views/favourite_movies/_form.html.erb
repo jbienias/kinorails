@@ -11,12 +11,16 @@
     </div>
   <% end %>
 
-  <div class="field">
-    <%= form.label :movie_id %>
-    <%= form.collection_select :movie_id, @movies, :id, :title, include_blank: true %>
-  </div>
+  <p>
+  <strong> Movie title: </strong>
+  <%= @movie.title %>
+  </p>
 
-  <div class="actions">
-    <%= form.submit %>
-  </div>
+  <%= form_for @favourite_movie, method: :post do |f| %>
+    <%= f.hidden_field :movie_id, :value => @movie.id %>
+
+    <div class="actions">
+      <%= form.submit %>
+    </div>
+  <% end %>
 <% end %>

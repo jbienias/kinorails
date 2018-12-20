@@ -6,6 +6,8 @@ class ReservationsController < ApplicationController
   end
 
   def show
+    @seats = Seat.all.where(:room_id => @reservation.screening.room_id)
+    @plan = seats_to_plan(@seats)
     @reserved_seats = ReservedSeat.all.where(:reservation_id => @reservation.id)
   end
 
@@ -82,6 +84,7 @@ end
   end
 
   private
+
     def set_reservation
       @reservation = Reservation.find(params[:id])
     end

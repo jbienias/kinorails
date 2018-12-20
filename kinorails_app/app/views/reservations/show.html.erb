@@ -20,8 +20,36 @@
 </p>
 
 <p>
-  <strong> Reserved seats: </strong>
-  <%= @reserved_seats.count %>
-</p>
+<strong> Reserved seats (<%= @reserved_seats.count %>) : </strong>
+
+<table>
+    <tbody>
+      <% @plan.length.times do |i| %>
+        <tr>
+        <% @plan[i].length.times do |j| %>
+            <% if @plan[i][j] == 1 %>
+              <% seat = @seats.select {|s| s.pos_x == j && s.pos_y == i} %>
+              <% seat_status = 0 %>
+              <% @reserved_seats.each do |rs| %>
+                <% if rs.seat_id == seat.first.id %>
+                  <% seat_status = 1 %>
+                  <% break %>
+                <% end %>
+              <% end %>
+              <% if seat_status == 1 %>
+                <td> [X] </td>
+              <% else %>
+                <td> [ ] </td>
+              <% end %>
+            <% else %>
+              <td> [ ] </td>
+            <% end %>
+        <% end %>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+
+  </p>
 
 <%= link_to 'Back', reservations_path %>

@@ -46,6 +46,7 @@ class ScreeningsController < ApplicationController
   end
 
   private
+
     def set_screening
       @screening = Screening.find(params[:id])
     end

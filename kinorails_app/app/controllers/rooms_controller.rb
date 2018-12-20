@@ -7,8 +7,8 @@ class RoomsController < ApplicationController
   end
 
   def show
-    @seats = (Seat.all.where(:room_id => @room.id)).to_a
-    @plan = convert_to_a
+    @seats = Seat.all.where(:room_id => @room.id).to_a
+    @plan = seats_to_plan(@seats)
   end
 
   def new
@@ -46,7 +46,9 @@ class RoomsController < ApplicationController
         seat_arr.each do |s|
           assign_room_id_to_seat(s, @room.id)
           if s.save
-            seats_created += 1
+            if s.type_of_seat == 1
+              seats_created += 1
+            end
           else
             err_count += 1
           end
@@ -80,6 +82,7 @@ class RoomsController < ApplicationController
   end
 
   private
+
     def set_room
       @room = Room.find(params[:id])
     end
@@ -90,23 +93,6 @@ class RoomsController < ApplicationController
 
     def room_params_update
       params.require(:room).permit(:name)
-    end
-
-    def convert_to_a
-      max_x = @seats[-1].pos_x
-      max_y = @seats.max_by(&:pos_y).pos_y
-  
-      @plan = Array.new(max_y + 1) { Array.new(max_x + 1) }
-  
-      @seats.each do |s|
-        @plan[s.pos_y][s.pos_x] = s.type_of_seat # =
-      end
-  
-      @plan.length.times do |i|
-        @plan[i] = @plan[i].map {|e| e.nil? ? 0 : e}
-      end
-  
-      @plan
     end
 
     def load_seats_location(filename)
@@ -136,5 +122,22 @@ class RoomsController < ApplicationController
       else
         -1
       end
+    end
+
+    def seats_to_plan(seats_array)
+      max_x = seats_array[-1].pos_x
+      max_y = seats_array.max_by(&:pos_y).pos_y
+  
+      plan = Array.new(max_y + 1) { Array.new(max_x + 1) }
+  
+      seats_array.each do |s|
+        plan[s.pos_y][s.pos_x] = s.type_of_seat
+      end
+  
+      plan.length.times do |i|
+        plan[i] = plan[i].map {|e| e.nil? ? 0 : e}
+      end
+  
+      plan
     end
 end
