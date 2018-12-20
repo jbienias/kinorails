@@ -21,7 +21,7 @@ class MoviesController < ApplicationController
     if @movie.save
       redirect_to @movie, notice: 'Movie was successfully created.'
     else
-      format.html { render :new }
+      render :new
     end
   end
 

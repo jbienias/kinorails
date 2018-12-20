@@ -14,6 +14,11 @@
 
   <strong> Reservation for... </strong>
   <p>
+    <strong>Screening ID:</strong>
+    <%= @screening.id %>
+  </p>
+
+  <p>
     <strong>Movie:</strong>
     <%= @screening.movie.title %>
   </p>
@@ -63,7 +68,7 @@
   <%= f.hidden_field :reservation, :value => @reservation %>
   <%= f.hidden_field :screening_id, :value => @screening.id %>
   <div class="actions">
-    <%= f.button  :submit , name: "screening_id",value: @screening.id%>
+    <%= f.button  :submit , name: "screening_id", value: @screening.id %>
   </div>
   <% end %>
 <% end %>

@@ -41,8 +41,14 @@ class ReservationsController < ApplicationController
     @plan
   end
 
+
   def create
-    @reservations = (Reservation.all.where(:screening_id => params[:screening_id].to_i)).to_a
+    @screening = Screening.find(params[:screening_id])
+    @seats = (Seat.all.where(:room_id => @screening.room_id)).to_a
+    @plan = convert_to_a
+
+    @reservations = Reservation.all.where(:screening_id => params[:screening_id].to_i)
+    @reservations = @reservations.to_a
     @reserved_seats = []
     @reservations.each do |r|
       @reserved_seats << ReservedSeat.all.where(:reservation_id => r.id)
@@ -56,36 +62,45 @@ class ReservationsController < ApplicationController
 
     @reservation = Reservation.new(reservation_params)
 
-    # TODO:
-    # sprawdzic czy params sa puste, jezeli sa to cofnij na "new"
-    #i daj notice zeby user wybral miejsca!
-
-    err_count = 0
-    params[:selected_seats].each do |ss|
-      if @reserved_seats_ids.include? ss
-        err_count = err_count + 1
-      end
-    end
-
-    # TODO:
-    #jezeli jest err count > 0, to znaczy ze ktores z zaznaczonych miejsc w
-    #miedzyczasie zostalo zajete!, cofnij do new z odpowiednim notice
-
-    if current_user != nil
-      @reservation.user_id = current_user.id
-    end
-    if @reservation.save
+    if params[:selected_seats].nil?
+      flash[:notice] = "Nie wybrano żadnych miejsc. Spróbuj ponownie!"
+      render :new
+    else
+      err_count = 0
       params[:selected_seats].each do |ss|
-        @selected_seat = create_reserved_seat(@reservation.id, ss)
-        if @selected_seat.save
-
-        else
-
+        if @reserved_seats_ids.include? ss
+          err_count = err_count + 1
         end
       end
-      redirect_to @reservation, notice: 'Reservation was successfully created.'
-    else
-      render :new
+
+      if err_count > 0
+        flash[:notice] = "Nieznany błąd (#{err_count})!"
+        render :new
+      else 
+        err_count = 0
+        ss_count = 0
+        if current_user != nil
+          @reservation.user_id = current_user.id
+        end
+        if @reservation.save
+          params[:selected_seats].each do |ss|
+            @selected_seat = create_reserved_seat(@reservation.id, ss)
+            if @selected_seat.save
+              ss_count = ss_count + 1
+            else
+              err_count = err_count + 1
+            end
+          end
+          if err_count > 0 
+            flash[:notice] = "Ktoś zajął Ci miejsca (ilość miejsc: #{err_count})!"
+            render :new
+          else
+            redirect_to @reservation, notice: "Reservation was successfully created and you've booked #{ss_count} seats!"
+          end
+        else
+          render :new
+        end
+      end
     end
   end
 
