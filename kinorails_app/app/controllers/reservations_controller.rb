@@ -12,8 +12,8 @@ class ReservationsController < ApplicationController
   def new
     @reservation = Reservation.new
     @screening = Screening.find(params[:current_screening_id])
-    @seats = (Seat.all.where(:room_id => @screening.room_id)).to_a
-    @plan = convert_to_a
+    @seats = Seat.all.where(:room_id => @screening.room_id).to_a
+    @plan = seats_to_plan(@seats)
 
     @reserved_seats = []
     @seats.each do |s|
@@ -26,8 +26,8 @@ class ReservationsController < ApplicationController
 
   def create
     @screening = Screening.find(params[:screening_id])
-    @seats = (Seat.all.where(:room_id => @screening.room_id)).to_a
-    @plan = convert_to_a
+    @seats = Seat.all.where(:room_id => @screening.room_id).to_a
+    @plan = seats_to_plan(@seats)
 
     @reservations = Reservation.all.where(:screening_id => params[:screening_id].to_i)
     @reservations = @reservations.to_a
@@ -46,46 +46,34 @@ class ReservationsController < ApplicationController
     if params[:selected_seats].nil?
       flash[:notice] = "Nie wybrano żadnych miejsc. Spróbuj ponownie!"
       render :new
-    else
-      err_count = 0
-      params[:selected_seats].each do |ss|
-        if @reserved_seats_ids.include? ss
-          err_count = err_count + 1
-        end
-      end
+    end
 
-      if err_count > 0
-        flash[:notice] = "Nieznany błąd (#{err_count})!"
-        render :new
-      else 
-        err_count = 0
-        ss_count = 0
-        if current_user != nil
-          @reservation.user_id = current_user.id
-        end
-        if @reservation.save
-          params[:selected_seats].each do |ss|
-            @selected_seat = create_reserved_seat(@reservation.id, ss)
-            if @selected_seat.save
-              ss_count = ss_count + 1
-            else
-              err_count = err_count + 1
-            end
-          end
-          if err_count > 0 
-            ReservedSeat.where(:reservation_id => @reservation.id).destroy_all
-            @reservation.destroy
-            flash[:notice] = "Ktoś zajął Ci miejsca (ilość miejsc: #{err_count})!"
-            render :new
-          else
-            redirect_to @reservation, notice: "Reservation was successfully created and you've booked #{ss_count} seats!"
-          end
-        else
-          render :new
-        end
-      end
+    err_count = 0
+    ss_count = 0
+    if current_user != nil
+      @reservation.user_id = current_user.id
+    end
+    
+    if @reservation.save
+      params[:selected_seats].each do |ss|
+      @selected_seat = create_reserved_seat(@reservation.id, ss)
+      if @selected_seat.save
+         ss_count = ss_count + 1
+       else
+         err_count = err_count + 1
+       end
+    end
+    
+    if err_count > 0 
+      ReservedSeat.where(:reservation_id => @reservation.id).destroy_all
+      @reservation.destroy
+      flash[:notice] = "In the meantime somebody already booked some of your chosen seats (count: #{err_count}). Choose new seats to book!"
+      render :new
+    else
+      redirect_to @reservation, notice: "Reservation was successfully created and you've booked #{ss_count} seats!"
     end
   end
+end
 
   def destroy
     ReservedSeat.where(:reservation_id => @reservation.id).destroy_all
@@ -107,5 +95,22 @@ class ReservationsController < ApplicationController
       reserved_seat.reservation_id = reservation_id
       reserved_seat.seat_id = seat_id
       reserved_seat
+    end
+
+    def seats_to_plan(seats_array)
+      max_x = seats_array[-1].pos_x
+      max_y = seats_array.max_by(&:pos_y).pos_y
+  
+      plan = Array.new(max_y + 1) { Array.new(max_x + 1) }
+  
+      seats_array.each do |s|
+        plan[s.pos_y][s.pos_x] = s.type_of_seat
+      end
+  
+      plan.length.times do |i|
+        plan[i] = plan[i].map {|e| e.nil? ? 0 : e}
+      end
+  
+      plan
     end
 end

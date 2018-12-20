@@ -17,8 +17,6 @@ class ReservedSeat < ApplicationRecord
     @reserved_seats.each do |i|
       @reserved_seats_ids << i.seat_id
     end
-    puts "WSZYSTKIE ZAREZERWOWANE MIEJSCA SEANSU (dotychczas)"
-    puts @reserved_seats_ids
   end
 
   def check_uniqueness_of_new_seats
@@ -27,15 +25,10 @@ class ReservedSeat < ApplicationRecord
     @selected_seats.each do |i|
       @selected_seats_ids << i.seat_id
     end
-    puts "WYBRALES"
-    puts @selected_seats_ids
 
     if (@selected_seats_ids - @reserved_seats_ids).empty?
-      puts "NIE GIT, bo #{@selected_seats_ids} są zajęte! BŁĄD!"
-      errors.add("Miejsce(a) zostały zajęte!", "Spróbuj ponownie!")
+      #errors.add("...")
       raise ActiveRecord::Rollback
-    else
-      puts "GIT, bo #{@selected_seats_ids} nie jest zajęte! BŁĄD!"
     end
   end
 end
