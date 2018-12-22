@@ -39,4 +39,8 @@
 
 <br>
 
-<%= link_to 'New Movie', new_movie_path %>
+<% if !current_user.nil? %>
+  <% if current_user.admin? %>
+    <%= link_to 'New Movie', new_movie_path %>
+  <% end %>
+<% end %>
