@@ -20,7 +20,7 @@
 </p>
 
 <p>
-<strong> Reserved seats (<%= @reserved_seats.count %>) : </strong>
+<strong> Reserved seats (<%= @reserved_seats.count %>) (X's): </strong>
 
 <table>
     <tbody>
@@ -39,7 +39,7 @@
               <% if seat_status == 1 %>
                 <td> [X] </td>
               <% else %>
-                <td> [ ] </td>
+                <td> [_/] </td> <!-- tutaj sa miejsca siedzace, ale nie twoje! !-->
               <% end %>
             <% else %>
               <td> [ ] </td>
