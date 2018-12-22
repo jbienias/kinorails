@@ -14,6 +14,11 @@
 
   <strong> Reservation for... </strong>
   <p>
+    <strong>Screening ID:</strong>
+    <%= @screening.id %>
+  </p>
+
+  <p>
     <strong>Movie:</strong>
     <%= @screening.movie.title %>
   </p>
@@ -29,7 +34,7 @@
   </p>
 
   <strong>Select your seats : </strong>
-
+  <%= form_for @reservation, method: :post do |f| %>
   <p> -------PLAN--------- </p>
 
   <table>
@@ -47,12 +52,12 @@
                 <% end %>
               <% end %>
               <% if seat_status == 1 %>
-                <td> Z </td>
+                <td> [Z] </td>
               <% else %>
-                <td> W </td>
+                <td> <%= check_box_tag "selected_seats[]", seat.first.id %> </td>
               <% end %>
             <% else %>
-              <td>  </td>
+              <td> [ ] </td>
             <% end %>
         <% end %>
         </tr>
@@ -60,11 +65,10 @@
     </tbody>
   </table>
 
-  <%= form_for @reservation, method: :post do |f| %>
   <%= f.hidden_field :reservation, :value => @reservation %>
   <%= f.hidden_field :screening_id, :value => @screening.id %>
   <div class="actions">
-    <%= form.submit %>
+    <%= f.button  :submit , name: "screening_id", value: @screening.id %>
   </div>
   <% end %>
 <% end %>

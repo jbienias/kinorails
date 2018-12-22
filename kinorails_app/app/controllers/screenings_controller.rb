@@ -40,12 +40,17 @@ class ScreeningsController < ApplicationController
   end
 
   def destroy
-    Reservation.where(:screening_id => @screening.id).destroy_all
+    reservations = Reservation.all.where(:screening_id => @screening.id)
+    reservations.each do |r|
+      ReservedSeat.all.where(:reservation_id => r.id).destroy_all
+      r.destroy
+    end
     @screening.destroy
     redirect_to screenings_url, notice: 'Screening was successfully destroyed.'
   end
 
   private
+
     def set_screening
       @screening = Screening.find(params[:id])
     end

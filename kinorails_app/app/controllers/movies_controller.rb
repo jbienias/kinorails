@@ -21,7 +21,7 @@ class MoviesController < ApplicationController
     if @movie.save
       redirect_to @movie, notice: 'Movie was successfully created.'
     else
-      format.html { render :new }
+      render :new
     end
   end
 
@@ -41,6 +41,7 @@ class MoviesController < ApplicationController
   end
 
   private
+
     def set_movie
       @movie = Movie.find(params[:id])
     end

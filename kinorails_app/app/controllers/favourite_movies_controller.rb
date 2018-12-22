@@ -3,12 +3,16 @@ class FavouriteMoviesController < ApplicationController
   before_action :set_favourite_movie, only: [:show, :destroy]
 
   def index
-    @favourite_movies = FavouriteMovie.all
+    if current_user.admin?
+      @favourite_movies = FavouriteMovie.all
+    else
+      @favourite_movies = FavouriteMovie.all.where(:user_id => current_user.id)
+    end
   end
 
   def new
     @favourite_movie = FavouriteMovie.new
-    @movies = Movie.all.order(:title)
+    @movie = Movie.find(params[:current_movie_id])
   end
 
   def create
@@ -28,6 +32,7 @@ class FavouriteMoviesController < ApplicationController
   end
 
   private
+
     def set_favourite_movie
       @favourite_movie = FavouriteMovie.find(params[:id])
     end
