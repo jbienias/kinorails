@@ -1,5 +1,6 @@
 class FavouriteMoviesController < ApplicationController
   before_action :authenticate_user!
+  before_action :check_if_user_not_admin
   before_action :set_favourite_movie, only: [:show, :destroy]
 
   def index
@@ -32,6 +33,14 @@ class FavouriteMoviesController < ApplicationController
   end
 
   private
+
+    def check_if_user_not_admin
+      @testuser = (!current_user.nil? && !current_user.admin?)
+
+      if @testuser == false
+        redirect_to root_path, :notice => 'This action is only for user.'
+      end
+    end
 
     def set_favourite_movie
       @favourite_movie = FavouriteMovie.find(params[:id])

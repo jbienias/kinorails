@@ -1,8 +1,15 @@
 class ReservationsController < ApplicationController
+  before_action :authenticate_user!
   before_action :set_reservation, only: [:show, :destroy]
 
   def index
-    @reservations = Reservation.all
+    @testadmin = (!current_user.nil? && current_user.admin?)
+
+    if @testadmin
+      @reservations = Reservation.all
+    else
+      @reservations = Reservation.all.where(:user_id => current_user.id)
+    end
   end
 
   def show
@@ -55,7 +62,7 @@ class ReservationsController < ApplicationController
     if current_user != nil
       @reservation.user_id = current_user.id
     end
-    
+
     if @reservation.save
       params[:selected_seats].each do |ss|
       @selected_seat = create_reserved_seat(@reservation.id, ss)
@@ -65,8 +72,8 @@ class ReservationsController < ApplicationController
          err_count = err_count + 1
        end
     end
-    
-    if err_count > 0 
+
+    if err_count > 0
       ReservedSeat.where(:reservation_id => @reservation.id).destroy_all
       @reservation.destroy
       flash[:notice] = "In the meantime somebody already booked some of your chosen seats (count: #{err_count}). Choose new seats to book!"
@@ -78,9 +85,15 @@ class ReservationsController < ApplicationController
 end
 
   def destroy
-    ReservedSeat.where(:reservation_id => @reservation.id).destroy_all
-    @reservation.destroy
-    redirect_to reservations_url, notice: 'Reservation was successfully destroyed.'
+    @testdestroy = ((!current_user.nil?) && ((current_user.admin?) || ReservedSeat.where(:user_id => current_user.id)))
+
+    if @testdestroy
+      ReservedSeat.where(:reservation_id => @reservation.id).destroy_all
+      @reservation.destroy
+      redirect_to reservations_url, notice: 'Reservation was successfully destroyed.'
+    else
+      redirect_to root_path, :notice => 'You can not destroy this reservation'
+    end
   end
 
   private
@@ -103,17 +116,17 @@ end
     def seats_to_plan(seats_array)
       max_x = seats_array[-1].pos_x
       max_y = seats_array.max_by(&:pos_y).pos_y
-  
+
       plan = Array.new(max_y + 1) { Array.new(max_x + 1) }
-  
+
       seats_array.each do |s|
         plan[s.pos_y][s.pos_x] = s.type_of_seat
       end
-  
+
       plan.length.times do |i|
         plan[i] = plan[i].map {|e| e.nil? ? 0 : e}
       end
-  
+
       plan
     end
 end

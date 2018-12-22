@@ -1,5 +1,6 @@
 class RoomsController < ApplicationController
   #before_action :authenticate_user!
+  before_action :check_if_user_admin
   before_action :set_room, only: [:show, :edit, :update, :destroy]
 
   def index
@@ -83,6 +84,14 @@ class RoomsController < ApplicationController
 
   private
 
+    def check_if_user_admin
+      @testadmin = (!current_user.nil? && current_user.admin?)
+
+      if @testadmin == false
+        redirect_to root_path, :notice => 'This action is only for admin.'
+      end
+    end
+
     def set_room
       @room = Room.find(params[:id])
     end
@@ -127,17 +136,17 @@ class RoomsController < ApplicationController
     def seats_to_plan(seats_array)
       max_x = seats_array[-1].pos_x
       max_y = seats_array.max_by(&:pos_y).pos_y
-  
+
       plan = Array.new(max_y + 1) { Array.new(max_x + 1) }
-  
+
       seats_array.each do |s|
         plan[s.pos_y][s.pos_x] = s.type_of_seat
       end
-  
+
       plan.length.times do |i|
         plan[i] = plan[i].map {|e| e.nil? ? 0 : e}
       end
-  
+
       plan
     end
 end

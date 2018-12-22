@@ -1,5 +1,6 @@
 class ScreeningsController < ApplicationController
   #before_action :authenticate_user!
+  before_action :check_if_user_admin, only: [:new, :create, :edit, :update, :destroy]
   before_action :set_screening, only: [:show, :edit, :update, :destroy]
 
   def index
@@ -50,6 +51,14 @@ class ScreeningsController < ApplicationController
   end
 
   private
+
+    def check_if_user_admin
+      @testadmin = (!current_user.nil? && current_user.admin?)
+
+      if @testadmin == false
+        redirect_to root_path, :notice => 'This action is only for admin.'
+      end
+    end
 
     def set_screening
       @screening = Screening.find(params[:id])
