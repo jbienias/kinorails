@@ -17,6 +17,9 @@ class ScreeningsController < ApplicationController
   end
 
   def edit
+    if @screening.date < Date.today
+      redirect_to @screening, notice: 'You cannot edit past screening!'
+    end
     @movies = Movie.all.order(:title)
     @rooms = Room.all.order(:name)
   end

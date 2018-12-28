@@ -30,7 +30,7 @@
           <td><%= link_to 'Destroy', movie, method: :delete, data: { confirm: 'Are you sure?' } %></td>
         <% end %>
         <% if current_user != nil && current_user.user? %>
-          <td><%= link_to 'Add to favourites',{:controller => "favourite_movies", :action => "new", :current_movie_id => movie.id} %></td>
+          <td><%= link_to 'Add to favourites',{:controller => "favourite_movies", :action => "favourite", :current_movie_id => movie.id}, method: :put %></td>
         <% end %>
       </tr>
     <% end %>

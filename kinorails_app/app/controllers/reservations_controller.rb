@@ -1,5 +1,5 @@
 class ReservationsController < ApplicationController
-  before_action :authenticate_user!
+  before_action :authenticate_user!, only: [:index, :edit, :update, :destroy]
   before_action :set_reservation, only: [:show, :destroy]
 
   def index
@@ -13,6 +13,9 @@ class ReservationsController < ApplicationController
   end
 
   def show
+    if current_user.nil? || @reservation.user_id != current_user.id
+      redirect_to root_path
+    end
     @seats = Seat.all.where(:room_id => @reservation.screening.room_id)
     @plan = seats_to_plan(@seats)
     @reserved_seats = ReservedSeat.all.where(:reservation_id => @reservation.id)
@@ -21,6 +24,9 @@ class ReservationsController < ApplicationController
   def new
     @reservation = Reservation.new
     @screening = Screening.find(params[:current_screening_id])
+    if @screening.date < Date.today
+      redirect_to screenings_url, notice: 'Cannot create reservation on past screening!'
+    end
     @seats = Seat.all.where(:room_id => @screening.room_id).to_a
     @plan = seats_to_plan(@seats)
 
