@@ -1,5 +1,11 @@
 <p id="notice"><%= notice %></p>
 
+<strong><h2>Reservation</h2> </strong>
+
+<% if current_user.nil? %>
+  <strong> GUEST! REMEMBER TO TAKE A SCREENSHOT OF YOUR RESERVATION AND SAVE IT SOMEWHERE SAFE! </strong>
+<% end %>
+
 <p>
   <strong>User:</strong>
   <% if @reservation.user_id == NIL %>
