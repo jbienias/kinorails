@@ -13,12 +13,23 @@ class ReservationsController < ApplicationController
   end
 
   def show
-    if current_user.nil? || @reservation.user_id != current_user.id
-      redirect_to root_path
+    if current_user.nil?
+      if !request.referrer.include? "reservations/new"
+        redirect_to root_path
+      else
+        @seats = Seat.all.where(:room_id => @reservation.screening.room_id)
+        @plan = seats_to_plan(@seats)
+        @reserved_seats = ReservedSeat.all.where(:reservation_id => @reservation.id)
+      end
+    else
+      if @reservation.user_id != current_user.id
+        redirect_to root_path
+      else
+        @seats = Seat.all.where(:room_id => @reservation.screening.room_id)
+        @plan = seats_to_plan(@seats)
+        @reserved_seats = ReservedSeat.all.where(:reservation_id => @reservation.id)
+      end
     end
-    @seats = Seat.all.where(:room_id => @reservation.screening.room_id)
-    @plan = seats_to_plan(@seats)
-    @reserved_seats = ReservedSeat.all.where(:reservation_id => @reservation.id)
   end
 
   def new

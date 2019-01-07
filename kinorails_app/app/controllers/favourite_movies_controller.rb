@@ -15,7 +15,7 @@ class FavouriteMoviesController < ApplicationController
     @movie = Movie.find(params[:current_movie_id])
     @favourite_movie = FavouriteMovie.new
     @already = FavouriteMovie.all.where(:movie_id => @movie.id, :user_id => current_user.id)
-    if @already.nil?
+    if @already.empty? #refactored @already.nil?
       @favourite_movie.movie_id = @movie.id
       @favourite_movie.user_id = current_user.id
       if @favourite_movie.save
