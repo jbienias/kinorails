@@ -3,6 +3,7 @@ class FavouriteMoviesController < ApplicationController
   before_action :check_if_user_not_admin
   before_action :set_favourite_movie, only: [:destroy]
 
+
   def index
     if current_user.admin?
       @favourite_movies = FavouriteMovie.all
@@ -46,7 +47,7 @@ class FavouriteMoviesController < ApplicationController
         redirect_to root_path, :notice => 'This action is only for user.'
       end
     end
-
+  
     def set_favourite_movie
       @favourite_movie = FavouriteMovie.find(params[:id])
     end
