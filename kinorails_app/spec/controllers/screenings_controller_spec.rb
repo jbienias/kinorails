@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe MoviesController, type: :controller do
+RSpec.describe ScreeningsController, type: :controller do
   before do
     @movie = Movie.create!({
       title: 'Test title',
@@ -9,6 +9,19 @@ RSpec.describe MoviesController, type: :controller do
       length: 200,
       poster_link: nil,
       description: nil,
+    })
+
+    @room = Room.create!({
+      id: 0,
+      name: 'Karkand',
+      layout_file_path: '/home/tmp.txt',
+    })
+
+    @screening = Screening.create!({
+      id: 0, 
+      movie_id: @movie.id,
+      room_id: @room.id,
+      date: Time.now + 7.days
     })
 
     @user_admin = User.create!({
@@ -22,9 +35,10 @@ RSpec.describe MoviesController, type: :controller do
   end
 
   describe 'GET #index' do
-    it 'assigns @movies' do
+    it 'assigns @screenings' do
+      sign_in @user_admin
       get :index
-      expect(assigns(:movies)).to eq([@movie])
+      expect(assigns(:screenings)).to eq([@screening])
     end
 
     it 'renders the #index template' do
@@ -43,7 +57,8 @@ RSpec.describe MoviesController, type: :controller do
 
   describe 'GET #show' do
     it 'renders the #show view' do
-      get :show, params: { id: @movie.id }
+      sign_in @user_admin
+      get :show, params: { id: @screening.id }
       expect(response).to render_template :show
     end
   end
@@ -51,27 +66,27 @@ RSpec.describe MoviesController, type: :controller do
   describe 'GET #edit' do
     it 'renders the #edit view' do
       sign_in @user_admin
-      get :edit, params: { id: @movie.id }
+      get :edit, params: { id: @screening.id }
       expect(response).to render_template :edit
     end
   end
 
   describe 'PATCH #update' do
-    it 'updates the movie and redirects' do
-      put :update, params: { id: @movie.id, movie: { :length => 180} }
+    it 'updates the screening and redirects' do
+      put :update, params: { id: @screening.id, screening: { :date => Time.now + 10.days} }
       expect(response).to be_redirect
     end
   end
 
   describe 'PUT #destroy' do
-    it 'destroys movie when admin' do
+    it 'destroys screening when admin' do
       sign_in @user_admin
       expect { 
-        delete :destroy, params: { id: @movie.id} 
-      }.to change(Movie, :count).by(-1)
+        delete :destroy, params: { id: @screening.id}
+      }.to change(Screening, :count).by(-1)
     end
 
-    it 'does not destroy movie when not admin' do
+    it 'does not destroy screening when not admin' do
       expect {
         delete :destroy, params: { id: @movie.id}
       }.to change(Movie, :count).by(0)

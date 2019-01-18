@@ -1,14 +1,11 @@
 require 'rails_helper'
 
-RSpec.describe MoviesController, type: :controller do
+RSpec.describe RoomsController, type: :controller do
   before do
-    @movie = Movie.create!({
-      title: 'Test title',
-      director: 'Test director',
-      country_of_origin: 'Poland',
-      length: 200,
-      poster_link: nil,
-      description: nil,
+    @room = Room.create!({
+      id: 0,
+      name: 'Karkand',
+      layout_file_path: '/home/tmp.txt',
     })
 
     @user_admin = User.create!({
@@ -22,12 +19,14 @@ RSpec.describe MoviesController, type: :controller do
   end
 
   describe 'GET #index' do
-    it 'assigns @movies' do
+    it 'assigns @room' do
+      sign_in @user_admin
       get :index
-      expect(assigns(:movies)).to eq([@movie])
+      expect(assigns(:rooms)).to eq([@room])
     end
 
     it 'renders the #index template' do
+      sign_in @user_admin
       get :index
       expect(response).to render_template('index')
     end
@@ -41,40 +40,35 @@ RSpec.describe MoviesController, type: :controller do
     end
   end
 
-  describe 'GET #show' do
-    it 'renders the #show view' do
-      get :show, params: { id: @movie.id }
-      expect(response).to render_template :show
-    end
-  end
-
   describe 'GET #edit' do
     it 'renders the #edit view' do
       sign_in @user_admin
-      get :edit, params: { id: @movie.id }
+      get :edit, params: { id: @room.id }
       expect(response).to render_template :edit
     end
   end
 
   describe 'PATCH #update' do
-    it 'updates the movie and redirects' do
-      put :update, params: { id: @movie.id, movie: { :length => 180} }
+    it 'updates the room and redirects' do
+      sign_in @user_admin
+      put :update, params: { id: @room.id, room: { :name => 'Karkand NEW'} }
       expect(response).to be_redirect
     end
   end
 
   describe 'PUT #destroy' do
-    it 'destroys movie when admin' do
+    it 'destroys room when admin' do
       sign_in @user_admin
       expect { 
-        delete :destroy, params: { id: @movie.id} 
-      }.to change(Movie, :count).by(-1)
+        delete :destroy, params: { id: @room.id} 
+      }.to change(Room, :count).by(-1)
     end
 
-    it 'does not destroy movie when not admin' do
+    it 'does not destroy room when not admin' do
       expect {
-        delete :destroy, params: { id: @movie.id}
-      }.to change(Movie, :count).by(0)
+        delete :destroy, params: { id: @room.id}
+      }.to change(Room, :count).by(0)
     end
   end
+
 end
