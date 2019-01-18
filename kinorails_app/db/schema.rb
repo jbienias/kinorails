@@ -10,13 +10,63 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_11_29_223702) do
+ActiveRecord::Schema.define(version: 2018_12_18_141451) do
 
-  create_table "rooms", force: :cascade do |t|
-    t.integer "seats"
-    t.string "plan"
+  create_table "favourite_movies", force: :cascade do |t|
+    t.integer "user_id"
+    t.integer "movie_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+  end
+
+  create_table "movies", force: :cascade do |t|
+    t.string "title"
+    t.string "director"
+    t.string "country_of_origin"
+    t.integer "length"
+    t.string "poster_link"
+    t.text "description"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "reservations", force: :cascade do |t|
+    t.integer "user_id"
+    t.integer "screening_id"
+    t.string "identifier"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "reserved_seats", force: :cascade do |t|
+    t.integer "reservation_id"
+    t.integer "seat_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "rooms", force: :cascade do |t|
+    t.string "name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.string "layout_file_path"
+  end
+
+  create_table "screenings", force: :cascade do |t|
+    t.integer "movie_id"
+    t.integer "room_id"
+    t.datetime "date"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "seats", force: :cascade do |t|
+    t.integer "room_id"
+    t.integer "pos_x"
+    t.integer "pos_y"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.integer "type_of_seat"
   end
 
   create_table "users", force: :cascade do |t|

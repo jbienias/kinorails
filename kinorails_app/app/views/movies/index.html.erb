@@ -1,0 +1,46 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Movies</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Title</th>
+      <th>Director</th>
+      <th>Country of origin</th>
+      <th>Length</th>
+      <th>Poster link</th>
+      <th>Description</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @movies.each do |movie| %>
+      <tr>
+        <td><%= movie.title %></td>
+        <td><%= movie.director %></td>
+        <td><%= movie.country_of_origin %></td>
+        <td><%= movie.length %></td>
+        <td><%= movie.poster_link %></td>
+        <td><%= movie.description %></td>
+        <td><%= link_to 'Show', movie %></td>
+        <% if current_user != nil && current_user.admin? %>
+          <td><%= link_to 'Edit', edit_movie_path(movie) %></td>
+          <td><%= link_to 'Destroy', movie, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        <% end %>
+        <% if current_user != nil && current_user.user? %>
+          <td><%= link_to 'Add to favourites',{:controller => "favourite_movies", :action => "favourite", :current_movie_id => movie.id}, method: :put %></td>
+        <% end %>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<% if !current_user.nil? %>
+  <% if current_user.admin? %>
+    <%= link_to 'New Movie', new_movie_path %>
+  <% end %>
+<% end %>

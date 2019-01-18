@@ -1,12 +1,35 @@
+<p id="notice"><%= notice %></p>
+
 <p>
-  <strong>Seats:</strong>
-  <%= @room.seats %>
+  <strong>Name:</strong>
+  <%= @room.name %>
 </p>
 
 <p>
-  <strong>Plan:</strong>
-  <%= @room.plan %>
+  <strong>Layout file path:</strong>
+  <%= @room.layout_file_path %>
 </p>
+
+</p>
+
+<p> -------PLAN--------- </p>
+
+<table>
+  <tbody>
+    <% @plan.length.times do |i| %>
+      <tr>
+      <% @plan[i].length.times do |j| %>
+          <% if @plan[i][j] == 1 %>
+            <td> X </td>
+          <% else %>
+            <td>  </td>
+          <% end %>
+      <% end %>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
 
 <%= link_to 'Edit', edit_room_path(@room) %> |
 <%= link_to 'Back', rooms_path %>

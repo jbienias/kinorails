@@ -1,0 +1,34 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Screenings</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>ID</th>
+      <th>Movie</th>
+      <th>Room</th>
+      <th>Date</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @screenings.each do |screening| %>
+      <tr>
+        <td><%= screening.id %></td>
+        <td><%= screening.movie.title %></td>
+        <td><%= screening.room_id %></td>
+        <td><%= screening.date %></td>
+        <td><%= link_to 'Show', screening %></td>
+        <td><%= link_to 'Edit', edit_screening_path(screening) %></td>
+        <td><%= link_to 'New Reservation', {:controller => "reservations", :action => "new", :current_screening_id => screening.id} %></td>
+        <td><%= link_to 'Destroy', screening, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Screening', new_screening_path %>

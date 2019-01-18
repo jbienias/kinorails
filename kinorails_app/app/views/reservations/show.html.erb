@@ -1,0 +1,61 @@
+<p id="notice"><%= notice %></p>
+
+<strong><h2>Reservation</h2> </strong>
+
+<% if current_user.nil? %>
+  <strong> GUEST! REMEMBER TO TAKE A SCREENSHOT OF YOUR RESERVATION AND SAVE IT SOMEWHERE SAFE! </strong>
+<% end %>
+
+<p>
+  <strong>User:</strong>
+  <% if @reservation.user_id == NIL %>
+    Guest
+  <% else %>
+    <%= @reservation.user.username %>
+  <%end%>
+</p>
+
+<p>
+  <strong>Screening:</strong>
+  <%= @reservation.screening_id %>
+</p>
+
+<p>
+  <strong>Identifier:</strong>
+  <%= @reservation.identifier %>
+</p>
+
+<p>
+<strong> Reserved seats (<%= @reserved_seats.count %>) (X's): </strong>
+
+<table>
+    <tbody>
+      <% @plan.length.times do |i| %>
+        <tr>
+        <% @plan[i].length.times do |j| %>
+            <% if @plan[i][j] == 1 %>
+              <% seat = @seats.select {|s| s.pos_x == j && s.pos_y == i} %>
+              <% seat_status = 0 %>
+              <% @reserved_seats.each do |rs| %>
+                <% if rs.seat_id == seat.first.id %>
+                  <% seat_status = 1 %>
+                  <% break %>
+                <% end %>
+              <% end %>
+              <% if seat_status == 1 %>
+                <td> [X] </td>
+              <% else %>
+                <td> [_/] </td> <!-- tutaj sa miejsca siedzace, ale nie twoje! !-->
+              <% end %>
+            <% else %>
+              <td> [ ] </td>
+            <% end %>
+        <% end %>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+
+  </p>
+
+<%= link_to 'Back', reservations_path %>

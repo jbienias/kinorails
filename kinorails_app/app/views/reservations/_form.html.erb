@@ -1,0 +1,74 @@
+<%= form_with(model: reservation, local: true) do |form| %>
+  <% if reservation.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(reservation.errors.count, "error") %> prohibited this reservation from being saved:</h2>
+
+      <ul>
+      <% reservation.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+
+  <strong> Reservation for... </strong>
+  <p>
+    <strong>Screening ID:</strong>
+    <%= @screening.id %>
+  </p>
+
+  <p>
+    <strong>Movie:</strong>
+    <%= @screening.movie.title %>
+  </p>
+
+  <p>
+    <strong>Room:</strong>
+    <%= @screening.room.name %>
+  </p>
+
+  <p>
+    <strong>Date:</strong>
+    <%= @screening.date %>
+  </p>
+
+  <strong>Select your seats : </strong>
+  <%= form_for @reservation, method: :post do |f| %>
+  <p> -------PLAN--------- </p>
+
+  <table>
+    <tbody>
+      <% @plan.length.times do |i| %>
+        <tr>
+        <% @plan[i].length.times do |j| %>
+            <% if @plan[i][j] == 1 %>
+              <% seat = @seats.select {|s| s.pos_x == j && s.pos_y == i} %>
+              <% seat_status = 0 %>
+              <% @reserved_seats.each do |rs| %>
+                <% if rs.seat_id == seat.first.id %>
+                  <% seat_status = 1 %>
+                  <% break %>
+                <% end %>
+              <% end %>
+              <% if seat_status == 1 %>
+                <td> [Z] </td>
+              <% else %>
+                <td> <%= check_box_tag "selected_seats[]", seat.first.id %> </td>
+              <% end %>
+            <% else %>
+              <td> [ ] </td>
+            <% end %>
+        <% end %>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+
+  <%= f.hidden_field :reservation, :value => @reservation %>
+  <%= f.hidden_field :screening_id, :value => @screening.id %>
+  <div class="actions">
+    <%= f.button  :submit , name: "screening_id", value: @screening.id %>
+  </div>
+  <% end %>
+<% end %>
