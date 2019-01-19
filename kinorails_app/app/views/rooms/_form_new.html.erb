@@ -11,17 +11,24 @@
     </div>
   <% end %>
 
-  <div class="field">
-    <%= form.label :name %>
-    <%= form.text_field :name %>
-  </div>
+  <table>
+    <tr>
+      <th></th>
+      <th></th>
+    </tr>
 
-  <div class="field">
-    <%= form.label :layout_file_path %>
-    <%= form.text_field :layout_file_path %>
-  </div>
+    <tr>
+      <td> <%= form.label :name %> </td>
+      <td> <%= form.text_field :name %> </td>
+    </tr>
+
+    <tr>
+      <td> <%= form.label :layout_file_path %> </td>
+      <td> <%= form.text_field :layout_file_path %> </td>
+    </tr>
+  </table>
 
   <div class="actions">
-    <%= form.submit %>
+    <%= form.submit "Submit", :class => "btn btn-outline-success minebtn btn-sm"%>
   </div>
 <% end %>
