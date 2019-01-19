@@ -218,6 +218,35 @@
    border-collapse: collapse;
  }
  
+ // my mods
+ .index {
+  width: 10%;
+}
+
+.indexborder {
+  border-right:2px solid #78C2AD;
+}
+
+th, td {
+  padding: 15px;
+  vertical-align:middle !important;
+}
+
+.index td:hover { // #bfebd2 #9AD1C1 #DEDEDE
+  background-color: #ECECF6;
+}
+
+th {
+  text-align: inherit;
+}
+
+// font awesome
+span {
+font-family: fontawesome !important;
+}
+
+// end
+
  caption {
    padding-top: 0.75rem;
    padding-bottom: 0.75rem;
@@ -2579,12 +2608,12 @@
  
  .btn.minebtn {
   opacity: 0.75;
-  color: #000000;
+  color: #FFFFFF;
 }
 
 .btn.minebtn:hover {
   opacity: 0.90;
-  color: #000000;
+  color: #FFFFFF;
 }
 
  @media screen and (prefers-reduced-motion: reduce) {

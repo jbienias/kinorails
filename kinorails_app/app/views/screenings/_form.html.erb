@@ -11,22 +11,29 @@
     </div>
   <% end %>
 
-  <div class="field">
-    <%= form.label :movie_id %>
-    <%= form.collection_select :movie_id, @movies, :id, :title, include_blank: true %>
-  </div>
+  <table>
+    <tr>
+      <th></th>
+      <th></th>
+    </tr>
 
-  <div class="field">
-    <%= form.label :room_id %>
-    <%= form.collection_select :room_id, @rooms, :id, :name, include_blank: true %>
-  </div>
+    <tr>
+      <td> <%= form.label :movie_id %> </td>
+      <td> <%= form.collection_select :movie_id, @movies, :id, :title, include_blank: true %> </td>
+    </tr>
 
-  <div class="field">
-    <%= form.label :date %>
-    <%= form.datetime_select :date %>
-  </div>
+    <tr>
+      <td> <%= form.label :room_id %> </td>
+      <td> <%= form.collection_select :room_id, @rooms, :id, :name, include_blank: true %> </td>
+    </tr>
+    
 
-  <div class="actions">
-    <%= form.submit %>
-  </div>
+    <tr>
+      <td> <%= form.label :date %> </td>
+      <td> <%= form.datetime_select :date %> </td>
+    </tr>
+  </table>
+    
+  <%= form.submit "Submit", :class => "btn btn-outline-success minebtn btn-sm" %>
+
 <% end %>
