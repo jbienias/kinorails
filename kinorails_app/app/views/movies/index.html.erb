@@ -24,13 +24,13 @@
         <td><%= movie.length %></td>
         <td><%= movie.poster_link %></td>
         <td><%= movie.description %></td>
-        <td><%= link_to 'Show', movie %></td>
+        <td><%= link_to 'Show', movie, :class => "btn btn-outline-secondary minebtn btn-sm" %></td>
         <% if current_user != nil && current_user.admin? %>
-          <td><%= link_to 'Edit', edit_movie_path(movie) %></td>
-          <td><%= link_to 'Destroy', movie, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+          <td><%= link_to 'Edit', edit_movie_path(movie), :class => "btn btn-outline-warning minebtn btn-sm" %> </td>
+          <td><%= link_to 'Destroy', movie, method: :delete, data: { confirm: 'Are you sure?' }, :class => "btn btn-outline-danger minebtn btn-sm" %> </td>
         <% end %>
         <% if current_user != nil && current_user.user? %>
-          <td><%= link_to 'Add to favourites',{:controller => "favourite_movies", :action => "favourite", :current_movie_id => movie.id}, method: :put %></td>
+          <td><%= link_to 'Add to favourites',{:controller => "favourite_movies", :action => "favourite", :current_movie_id => movie.id}, method: :put, :class => "btn btn-outline-info minebtn btn-sm" %></td>
         <% end %>
       </tr>
     <% end %>
@@ -41,6 +41,6 @@
 
 <% if !current_user.nil? %>
   <% if current_user.admin? %>
-    <%= link_to 'New Movie', new_movie_path %>
+    <%= link_to 'New Movie', new_movie_path, :class => "btn btn-outline-success minebtn btn-sm" %>
   <% end %>
 <% end %>

@@ -32,7 +32,7 @@
 
 <% if !current_user.nil? %>
   <% if current_user.admin? %>
-    <%= link_to 'Edit', edit_movie_path(@movie) %> |
+    <%= link_to 'Edit', edit_movie_path(@movie), :class => "btn btn-outline-warning minebtn btn-sm" %> |
   <% end %>
 <% end %>
-<%= link_to 'Back', movies_path %>
+<%= link_to 'Back', movies_path, :class => "btn btn-outline-danger minebtn btn-sm" %>
