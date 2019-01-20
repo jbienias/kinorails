@@ -52,12 +52,12 @@
                 <% end %>
               <% end %>
               <% if seat_status == 1 %>
-                <td> [Z] </td>
+                <td> <%= image_tag ("seat-taken.png"), style:"height: 50%; width: 50%;" %> </td>
               <% else %>
                 <td> <%= check_box_tag "selected_seats[]", seat.first.id %> </td>
               <% end %>
             <% else %>
-              <td> [ ] </td>
+              <td> </td>
             <% end %>
         <% end %>
         </tr>

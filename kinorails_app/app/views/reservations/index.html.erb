@@ -30,7 +30,9 @@
       <% end %>
         <td><%= reservation.screening_id %></td>
         <td><%= reservation.identifier %></td>
+        <% if !current_user.nil? && current_user.user? %>
         <td><%= link_to 'Show', reservation, :class => "btn btn-outline-secondary minebtn btn-sm" %></td>
+        <% end %>
         <td><%= link_to 'Destroy', reservation, method: :delete, data: { confirm: 'Are you sure?' }, :class => "btn btn-outline-danger minebtn btn-sm" %></td>
       </tr>
     <% end %>
