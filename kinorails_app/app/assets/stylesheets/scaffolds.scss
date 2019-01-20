@@ -240,6 +240,10 @@ th {
   text-align: inherit;
 }
 
+td.editaccount {
+  vertical-align: top;
+  padding: 0px;
+}
 // font awesome
 span {
 font-family: fontawesome !important;
@@ -267,6 +271,17 @@ height: 75px;
 // invert colors of an image
 img-inverted {
   filter: invert(100%);
+}
+
+// footer
+.customfooter {
+  text-align: center;
+  margin-left: auto;
+  margin-right: auto;
+  left: 0;
+  right: 0;
+  font-family: "Lato", -apple-system, system-ui, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  color: #7F7F7F;
 }
 
 // end
