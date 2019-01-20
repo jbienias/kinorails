@@ -2,6 +2,7 @@ class MoviesController < ApplicationController
   before_action :check_if_user_admin, only: [:new, :create, :edit, :update, :destroy]
   before_action :set_movie, only: [:show, :edit, :update, :destroy]
 
+  before_action :find_movie, only: [:show, :edit, :update, :destroy]
   helper_method :sort_column, :sort_direction
 
   def index
@@ -65,6 +66,10 @@ class MoviesController < ApplicationController
       params.require(:movie).permit(:title, :director, :country_of_origin, :length, :poster_link, :description)
     end
 
+    # searching
+    def find_movie
+      @movie = Movie.find(params[:id])
+    end
 
     # sorting 
     def sortable_columns
