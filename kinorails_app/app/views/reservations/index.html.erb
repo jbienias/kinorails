@@ -10,10 +10,10 @@
   <thead>
     <tr>
       <% if !current_user.nil? && current_user.admin?%>
-        <th>User</th>
+      <th class="index"><%= sort_link "user_id", "User" %></th>
       <% end %>
-      <th>Screening</th>
-      <th>Identifier</th>
+      <th class="index"><%= sort_link "screening_id" %></th>
+      <th class="index"><%= sort_link "identifier" %></th>
       <th colspan="3"></th>
     </tr>
   </thead>

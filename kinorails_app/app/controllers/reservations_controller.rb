@@ -2,13 +2,23 @@ class ReservationsController < ApplicationController
   before_action :authenticate_user!, only: [:index, :edit, :update, :destroy]
   before_action :set_reservation, only: [:show, :destroy]
 
+  helper_method :sort_column, :sort_direction
+
   def index
     @testadmin = (!current_user.nil? && current_user.admin?)
 
     if @testadmin
-      @reservations = Reservation.all
+      if params[:search]
+        @reservations = Reservation.search(params[:search]).order("created_at DESC")
+      else
+        @reservations = Reservation.all.order("#{sort_column} #{sort_direction}")
+      end
     else
-      @reservations = Reservation.all.where(:user_id => current_user.id)
+      if params[:search]
+        @reservations = Reservation.search(params[:search]).order("created_at DESC")
+      else
+        @reservations = Reservation.all.where(:user_id => current_user.id).order("#{sort_column} #{sort_direction}")
+      end
     end
   end
 
@@ -145,5 +155,18 @@ end
       end
 
       plan
+    end
+
+    # sorting 
+    def sortable_columns
+      ["user_id", "screening_id", "identifier"]
+    end
+
+    def sort_column
+      sortable_columns.include?(params[:column]) ? params[:column] : "user_id"
+    end
+
+    def sort_direction
+      %w[asc desc].include?(params[:direction]) ? params[:direction] : "asc"
     end
 end
