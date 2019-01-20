@@ -2,7 +2,7 @@
 
 <h1>Favourite Movies</h1>
 
-<table>
+<table class="table table-stripped table-hover index indexborder">
   <thead>
     <tr>
       <th class="index"><%= sort_link "user_id", "User" %></th>
@@ -16,7 +16,7 @@
       <tr>
         <td><%= favourite_movie.user.username %></td>
         <td><%= favourite_movie.movie.title %></td>
-        <td><%= link_to 'Destroy', favourite_movie, method: :delete, data: { confirm: 'Are you sure?' }, :class => "btn btn-outline-danger minebtn btn-sm" %></td>
+        <td align = "right"><%= link_to 'Destroy', favourite_movie, method: :delete, data: { confirm: 'Are you sure?' }, :class => "btn btn-outline-danger minebtn btn-sm" %></td>
       </tr>
     <% end %>
   </tbody>
