@@ -254,14 +254,18 @@ div.divrightoriented {
   font-size: 1rem;
 }
 
+// navbar
 nav.mynavbar {
 height: 75px;
 }
 
-
+// invert colors of an image
 img-inverted {
   filter: invert(100%);
 }
+
+// checkboxes
+
 // end
 
  caption {
@@ -594,8 +598,8 @@ img-inverted {
  
  .container {
    width: 100%;
-   padding-right: 15px;
-   padding-left: 15px;
+  // padding-right: 15px;
+  // padding-left: 15px;
    margin-right: auto;
    margin-left: auto;
  }
