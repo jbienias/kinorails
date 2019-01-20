@@ -28,7 +28,9 @@
           <td><%= reservation.user.username  %></td>
         <%end%>
       <% end %>
-        <td><%= reservation.screening_id %></td>
+        <td><%= reservation.screening.movie.title %> </br>
+            <%= "Room no.: " + reservation.screening.room.id.to_s + ", name: " + reservation.screening.room.name %> </br>
+            <%= "Date: " + reservation.screening.date.strftime("%d.%m.%Y %H:%M") %></td>
         <td><%= reservation.identifier %></td>
         <% if !current_user.nil? && current_user.user? %>
         <td><%= link_to 'Show', reservation, :class => "btn btn-outline-secondary minebtn btn-sm" %></td>
