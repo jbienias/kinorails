@@ -1,6 +1,6 @@
 class ScreeningsController < ApplicationController
   #before_action :authenticate_user!
-  before_action :check_if_user_admin, only: [:new, :create, :edit, :update, :destroy]
+  before_action :check_if_user_admin, only: [:index, :new, :create, :edit, :update, :destroy]
   before_action :set_screening, only: [:show, :edit, :update, :destroy]
 
   def index

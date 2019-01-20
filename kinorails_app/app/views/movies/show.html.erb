@@ -30,6 +30,28 @@
   <%= @movie.description %>
 </p>
 
+<b>Available screenings for <%= @movie.title %></b>
+
+<table>
+  <thead>
+    <tr>
+      <th>Room</th>
+      <th>Date</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @screenings.each do |screening| %>
+      <tr>
+        <td><%= screening.room_id %></td>
+        <td><%= screening.date %></td>   
+        <td><%= link_to 'New Reservation', {:controller => "reservations", :action => "new", :current_screening_id => screening.id}, :class => "btn btn-outline-success minebtn btn-sm" %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
 <% if !current_user.nil? %>
   <% if current_user.admin? %>
     <%= link_to 'Edit', edit_movie_path(@movie), :class => "btn btn-outline-warning minebtn btn-sm" %> |

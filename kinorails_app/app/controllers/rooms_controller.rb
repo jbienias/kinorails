@@ -24,46 +24,51 @@ class RoomsController < ApplicationController
 
     err_count = 0
     seats_created = 0
-    arr = load_seats_location(@room.layout_file_path)
-    seat_arr = []
+    if @room.layout_file_path.to_s.empty? || !File.file?(@room.layout_file_path)
+      flash.now[:notice] = 'Room could not be saved. Make sure that the file you provided exists!'
+      render :new
+    else
+      arr = load_seats_location(@room.layout_file_path)
+      seat_arr = []
 
-    arr.each_with_index do |row, i|
-      row.each_with_index do |column, j|
+      arr.each_with_index do |row, i|
+        row.each_with_index do |column, j|
 
-        type_of_seat_tmp = change_type_of_seat(arr[i][j])
+          type_of_seat_tmp = change_type_of_seat(arr[i][j])
 
-        if type_of_seat_tmp != -1
-          @seat = create_seat(j, i, type_of_seat_tmp)
-          seat_arr << @seat
-        else
-          err_count += 1
-        end
-
-      end
-    end
-
-    if err_count == 0
-      if @room.save
-        seat_arr.each do |s|
-          assign_room_id_to_seat(s, @room.id)
-          if s.save
-            if s.type_of_seat == 1
-              seats_created += 1
-            end
+          if type_of_seat_tmp != -1
+            @seat = create_seat(j, i, type_of_seat_tmp)
+            seat_arr << @seat
           else
             err_count += 1
           end
+
         end
-        redirect_to @room, notice: "Room and #{seats_created} seats were successfully created."
+      end
+
+      if err_count == 0
+        if @room.save
+          seat_arr.each do |s|
+            assign_room_id_to_seat(s, @room.id)
+            if s.save
+              if s.type_of_seat == 1
+                seats_created += 1
+              end
+            else
+              err_count += 1
+            end
+          end
+          redirect_to @room, notice: "Room and #{seats_created} seats were successfully created."
+        else
+          Seat.where(:room_id => @room.id).destroy_all
+          @room.destroy
+          flash[:notice] = "Room could not be saved!"
+          render :new
+        end
       else
-        Seat.where(:room_id => @room.id).destroy_all
-        @room.destroy
-        flash[:notice] = "Room could not be saved!"
+        flash.now[:notice] = 'Room could not be saved. Make sure that the file you provided is correct!'
         render :new
       end
-    else
-      flash.now[:notice] = 'Room could not be saved. Make sure that the file you provided is correct!'
-      render :new
     end
   end
 
