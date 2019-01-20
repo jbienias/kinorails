@@ -17,4 +17,5 @@ module MoviesHelper
         "<span class='fa fa-caret-down'></span>".html_safe
         end
     end
+    
 end

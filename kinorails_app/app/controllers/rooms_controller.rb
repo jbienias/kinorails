@@ -3,8 +3,14 @@ class RoomsController < ApplicationController
   before_action :check_if_user_admin
   before_action :set_room, only: [:show, :edit, :update, :destroy]
 
+  helper_method :sort_column, :sort_direction
+
   def index
-    @rooms = Room.all
+    if params[:search]
+      @rooms = Room.search(params[:search]).order("name DESC")
+    else
+      @rooms = Room.all.order("#{sort_column} #{sort_direction}")
+    end
   end
 
   def show
@@ -153,5 +159,18 @@ class RoomsController < ApplicationController
       end
 
       plan
+    end
+
+    # sorting 
+    def sortable_columns
+      ["name"]
+    end
+  
+    def sort_column
+      sortable_columns.include?(params[:column]) ? params[:column] : "name"
+    end
+  
+    def sort_direction
+      %w[asc desc].include?(params[:direction]) ? params[:direction] : "asc"
     end
 end
