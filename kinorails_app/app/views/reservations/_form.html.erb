@@ -68,7 +68,7 @@
   <%= f.hidden_field :reservation, :value => @reservation %>
   <%= f.hidden_field :screening_id, :value => @screening.id %>
   <div class="actions">
-    <%= f.button  :submit , name: "screening_id", value: @screening.id %>
+    <%= f.button  :submit, name: "screening_id", value: @screening.id, :class => "btn btn-outline-success minebtn btn-sm" %>
   </div>
   <% end %>
 <% end %>
