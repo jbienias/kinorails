@@ -14,7 +14,7 @@
       </td>
       <td align = "right">
         <%= form_tag(movies_path, :method => "get", id: "search-form") do %>
-          <%= text_field_tag :search, params[:search], placeholder: "Search for movies" %>
+          <%= text_field_tag :search, params[:search], placeholder: "Search for movies", class: 'form-control-smallest ' %>
             <div class="btn-group minebtn btn-sm" role="group">
               <%= button_tag(type: 'submit', class: "btn btn-outline-primary minebtn btn-sm") do %>
                 <span class='fa fa-search'></span>
