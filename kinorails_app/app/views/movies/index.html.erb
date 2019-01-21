@@ -47,14 +47,14 @@
   <tbody>
     <% @movies.each do |movie| %>
       <tr>
-        <td data-toggle="modal" data-target="#myModalRow" + "<%=" + movie.title + "%>"><%= movie.title %></td>
-        <td data-toggle="modal" data-target="#myModalRow" + "<%=" + movie.title + "%>"><%= movie.director %></td>
-        <td data-toggle="modal" data-target="#myModalRow" + "<%=" + movie.title + "%>"><%= movie.length %></td>
-        <td> <a data-toggle="modal" href="#myModalPoster" + "<%=" + movie.title + "%>"> 
+        <td data-toggle="modal" data-target="#myModalRow<%=movie.id%>"><%= movie.title %></td>
+        <td data-toggle="modal" data-target="#myModalRow<%=movie.id%>"><%= movie.director %></td>
+        <td data-toggle="modal" data-target="#myModalRow<%=movie.id%>"><%= movie.length %></td>
+        <td> <a data-toggle="modal" href="#myModalPoster<%=movie.id%>"> 
         <%= image_tag movie.poster_link, :height => 50, :crop => "pad" %> </a> </td> 
 
         <!-- Modal for show row -->
-        <div class="modal fade" id="myModalRow" + "<%=" + movie.title + "%>" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+        <div class="modal fade" id="myModalRow<%=movie.id%>" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
           <div class="modal-dialog" role="document">
             <div class="modal-content">
               <div class="modal-header">
@@ -82,7 +82,7 @@
         <!-- End of modal for show row -->
 
         <!-- Modal for poster -->
-        <div class="modal fade" id="myModalPoster" + "<%=" + movie.title + "%>" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+        <div class="modal fade" id="myModalPoster<%= movie.id %>" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
           <div class="modal-dialog" role="document">
             <div class="modal-content">
               <div class="modal-header">

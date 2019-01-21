@@ -87,8 +87,17 @@ class RoomsController < ApplicationController
   end
 
   def destroy
-    Seat.where(:room_id => @room.id).destroy_all
-    Screening.where(:room_id => @room.id).destroy_all
+    Seat.all.where(:room_id => @room.id).destroy_all
+    screenings = Screening.all.where(:room_id => @room.id)
+    screenings.each do |screening|
+      reservations = Reservation.all.where(:screening_id => screening.id)
+        reservations.each do |reservation|
+          reservedseats = ReservedSeat.all.where(:reservation_id => reservation.id)
+          reservedseats.destroy_all
+        end
+        reservations.destroy_all
+    end
+    screenings.destroy_all
     @room.destroy
     redirect_to rooms_url, notice: 'Room was successfully destroyed.'
   end

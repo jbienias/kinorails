@@ -162,13 +162,13 @@
  }
  
  a {
-   color: #00bc8c;
+   color: #BF4556;
    text-decoration: none;
    background-color: transparent;
  }
  
  a:hover {
-   color: #007053;
+   color: #BF3056;
    text-decoration: underline;
  }
  
@@ -330,7 +330,7 @@ p.warning {
 
 input[type=checkbox] {
   position: absolute;
-  top: -9999px;
+  //top: -9999px;
   left: -9999px;
 }
 
@@ -362,6 +362,12 @@ label.check {
   display: block;
   margin: 0 0 0 0;
 }
+
+// custom link
+.navbar-link {
+  color: #BF4556;
+}
+
 // end
 
  caption {

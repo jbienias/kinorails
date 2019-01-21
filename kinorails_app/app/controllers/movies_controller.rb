@@ -17,7 +17,7 @@ class MoviesController < ApplicationController
   end
 
   def show
-    @screenings = Screening.all.where(:movie_id => @movie.id).where("date > ?", Time.now - 1.day)
+    @screenings = Screening.all.where(:movie_id => @movie.id).where("date > ?", Time.now - 1.day).order("date ASC")
   end
 
   def new

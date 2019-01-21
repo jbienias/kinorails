@@ -42,6 +42,8 @@ class ScreeningsController < ApplicationController
   end
 
   def update
+    @movies = Movie.all.order(:title)
+    @rooms = Room.all.order(:name)
     if @screening.update(screening_params)
       redirect_to @screening, notice: 'Screening was successfully updated.'
     else
