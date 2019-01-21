@@ -17,9 +17,13 @@
   <br/>
   <strong>Poster:</strong>
   <br/>
-  <%= image_tag @movie.poster_link, :height => 200, :crop => "pad" %>
-  <br/>
-  <a href = "<%= @movie.poster_link %>">Full view</a>
+  <% if @movie.poster_link == "" %>
+    No poster attached!
+  <% else %>
+    <%= image_tag @movie.poster_link, :height => 200, :crop => "pad" %>
+    <br/>
+    <a href = "<%= @movie.poster_link %>">Full view</a>
+  <% end %>
   <br/>
   <strong>Description:</strong>
   <%= @movie.description %>
