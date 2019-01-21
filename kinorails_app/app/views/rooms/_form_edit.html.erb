@@ -1,0 +1,33 @@
+<%= form_with(model: room, local: true) do |form| %>
+  <% if room.errors.any? %>
+    <div id="error_explanation">
+      <h2 class="error_explanation"><%= pluralize(room.errors.count, "error") %> prohibited this room from being saved:</h2>
+
+      <ul>
+      <% room.errors.full_messages.each do |message| %>
+        <li class="error_explanation"><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+ <table>
+    <tr>
+      <th></th>
+      <th></th>
+    </tr>
+
+    <tr>
+      <td> <%= form.label :name %> </td>
+      <td> <%= form.text_field :name %> </td>
+    </tr>
+  </table>
+
+  <div class="actions">
+    <%= link_to 'Back to rooms', rooms_path, :class => "btn btn-outline-danger minebtn btn-sm" %>
+    &nbsp; 
+    <%= link_to 'Show that room', @room, :class => "btn btn-outline-secondary minebtn btn-sm" %>     
+    &nbsp;
+    <%= form.submit "Submit", :class => "btn btn-outline-success minebtn btn-sm" %> 
+  </div>
+<% end %>

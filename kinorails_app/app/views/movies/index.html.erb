@@ -1,0 +1,147 @@
+<p id="notice"><%= modified_notice %></p>
+
+<table class="search">
+  <thead>
+    <tr>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>
+        <h1>Movies</h1>
+      </td>
+      <td align = "right">
+        <%= form_tag(movies_path, :method => "get", id: "search-form") do %>
+          <%= text_field_tag :search, params[:search], placeholder: "Search for movies" %>
+            <div class="btn-group minebtn btn-sm" role="group">
+              <%= button_tag(type: 'submit', class: "btn btn-outline-primary minebtn btn-sm") do %>
+                <span class='fa fa-search'></span>
+              <% end %>
+              <%= link_to(raw('<span class="fa fa-times"></span>'), movies_path, class: 'btn btn-outline-danger minebtn btn-sm') %>
+            </div>
+          <% end %>
+          <% if @movies.blank? && Movie.count != 0 %>
+            There are no games which name contains '<%= params[:search] %>' &emsp;
+          <% end %>
+          <% if Movie.count == 0 %>
+            There are no games &emsp;
+          <% end %>
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+<table class="table table-stripped table-hover index indexborder">
+  <thead>
+    <tr>
+      <th class="index"><%= sort_link "title" %></th>
+      <th class="index"><%= sort_link "director" %></th>
+      <th class="index"><%= sort_link "length" %></th>
+      <th class="index"><%= sort_link "poster_link", "Poster" %></th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @movies.each do |movie| %>
+      <tr>
+        <td data-toggle="modal" data-target="#myModalRow<%=movie.id%>"><%= movie.title %></td>
+        <td data-toggle="modal" data-target="#myModalRow<%=movie.id%>"><%= movie.director %></td>
+        <td data-toggle="modal" data-target="#myModalRow<%=movie.id%>"><%= movie.length %></td>
+        <td> <a data-toggle="modal" href="#myModalPoster<%=movie.id%>"> 
+        <%= image_tag movie.poster_link, :height => 50, :crop => "pad" %> </a> </td> 
+
+        <!-- Modal for show row -->
+        <div class="modal fade" id="myModalRow<%=movie.id%>" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+          <div class="modal-dialog" role="document">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h4 class="modal-title" id="myModalLabel"><b><%= movie.title %></b>'s quick view</h4>
+              </div>
+              <div class="modal-body">
+                <strong>Title:</strong>
+                <%= movie.title %>
+                <br/>
+                <strong>Director:</strong>
+                <%= movie.director %>
+                <br/>
+                <strong>Country of origin:</strong>
+                <%= movie.country_of_origin %>
+                <br/>
+                <strong>Length:</strong>
+                <%= movie.length %>
+                <br/>
+                <strong>Description:</strong>
+                <%= movie.description %>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- End of modal for show row -->
+
+        <!-- Modal for poster -->
+        <div class="modal fade" id="myModalPoster<%= movie.id %>" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+          <div class="modal-dialog" role="document">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h4 class="modal-title" id="myModalLabel"><b><%= movie.title %></b>'s poster close-up</h4>
+              </div>
+              <div class="modal-body">
+              <%= image_tag movie.poster_link %>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- End of modal for poster -->
+
+        <td align = "right">
+          <%= link_to(raw('<span class="fa fa-eye"></span>'), movie, :class => "btn btn-outline-secondary minebtn btn-sm") %>
+          &nbsp; 
+          <% if current_user != nil && current_user.admin? %>
+            <%= link_to(raw('<span class="fa fa-pencil"></span>'), edit_movie_path(movie), :class => "btn btn-outline-warning minebtn btn-sm") %>
+            &nbsp;
+            <button type="button" class="btn btn-outline-danger minebtn btn-sm" data-toggle="modal" data-target="#modalDelete<%= movie.id %>"><span class="fa fa-times"></span></button>
+
+            <!-- modalDelete -->
+            <div class="modal fade" id="modalDelete<%= movie.id %>" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+              <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <h4 class="modal-title" id="myModalLabel">Delete confirmation</h4>
+                  </div>
+                  <div class="modal-body">
+                    Are you sure you want to delete this movie: <br/>
+                    '<%= movie.title %>' by <%= movie.director %>?
+                  </div>
+                  <div class="modal-footer">
+                    <button type="button" class="btn btn-outline-secondary minebtn btn-sm" data-dismiss="modal">No</button>
+                    <%= link_to 'Delete', movie, method: :delete, :class => "btn btn-outline-danger minebtn btn-sm" %>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <!-- end of modalDelete -->
+            
+          <% end %>
+          <% if current_user != nil && current_user.user? %>
+           <% if @favourite_movies_ids.include? movie.id %>
+           <%= link_to(raw('<span class="fa fa-star"></span>') ,{:controller => "favourite_movies", :action => "favourite", :current_movie_id => movie.id}, method: :put, :class => "btn btn-warning minebtn btn-sm") %>
+           <% else %>
+            <%= link_to(raw('<span class="fa fa-star"></span>') ,{:controller => "favourite_movies", :action => "favourite", :current_movie_id => movie.id}, method: :put, :class => "btn btn-outline-warning minebtn btn-sm") %>
+           <% end %>
+            <% end %>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<% if !current_user.nil? && current_user.admin? %>
+  <%= link_to(raw('<b>New Movie</b> &nbsp; <span class="fa fa-plus"></span>'), new_movie_path, :class => "btn btn-outline-success minebtn btn-sm") %>
+<% end %>
+
+

@@ -1,12 +1,12 @@
-<p id="notice"><%= notice %></p>
+<p id="notice"><%= modified_notice %></p>
 
 <h1>Rooms</h1>
 
-<table>
+<table class="table table-stripped table-hover index indexborder">
   <thead>
     <tr>
-      <th>Seats</th>
-      <th>Plan</th>
+    <th class="index"><%= "Identifier" %></th>
+    <th class="index"><%= sort_link "name" %></th>
       <th colspan="3"></th>
     </tr>
   </thead>
@@ -14,11 +14,34 @@
   <tbody>
     <% @rooms.each do |room| %>
       <tr>
-        <td><%= room.seats %></td>
-        <td><%= room.plan %></td>
-        <td><%= link_to 'Show', room %></td>
-        <td><%= link_to 'Edit', edit_room_path(room) %></td>
-        <td><%= link_to 'Destroy', room, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        <td> &#x2116; <%= room.id %></td>
+        <td><%= room.name %></td>
+        <td align = "right">
+          <%= link_to(raw('<span class="fa fa-eye"></span>'), room, :class => "btn btn-outline-secondary minebtn btn-sm") %> 
+          &nbsp;
+          <button type="button" class="btn btn-outline-danger minebtn btn-sm" data-toggle="modal" data-target="#modalDelete<%= room.name %>"><span class="fa fa-times"></span></button>
+
+            <!-- modalDelete -->
+            <div class="modal fade" id="modalDelete<%= room.name %>" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+              <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <h4 class="modal-title" id="myModalLabel">Delete confirmation</h4>
+                  </div>
+                  <div class="modal-body">
+                    Are you sure you want to delete this room: <br/>
+                    <%= room.name %>?
+                  </div>
+                  <div class="modal-footer">
+                    <button type="button" class="btn btn-outline-secondary minebtn btn-sm" data-dismiss="modal">No</button>
+                    <%= link_to 'Delete', room, method: :delete, :class => "btn btn-outline-danger minebtn btn-sm" %>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <!-- end of modalDelete -->
+
+        </td>
       </tr>
     <% end %>
   </tbody>
@@ -26,4 +49,4 @@
 
 <br>
 
-<%= link_to 'New Room', new_room_path %>
+<%= link_to(raw('<b>New Room</b> &nbsp; <span class="fa fa-plus"></span>'), new_room_path, :class => "btn btn-outline-success minebtn btn-sm") %>

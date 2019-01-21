@@ -1,0 +1,62 @@
+<p id="notice"><%= modified_notice %></p>
+
+<strong><h2>Reservation</h2> </strong>
+
+<% if current_user.nil? %>
+  <p class = "warning"> GUEST! REMEMBER TO TAKE A SCREENSHOT OF YOUR RESERVATION AND SAVE IT SOMEWHERE SAFE! </p>
+<% end %>
+
+<p>
+  <strong>User:</strong>
+  <% if @reservation.user_id == NIL %>
+    Guest
+  <% else %>
+    <%= @reservation.user.username %>
+  <%end%>
+  <br/>
+  <strong>Screening:</strong>
+  '<%= @reservation.screening.movie.title %>' in  <%= "Room no.: " + @reservation.screening.room.id.to_s + ", name: " + @reservation.screening.room.name %> at <%= @reservation.screening.date.strftime("%d.%m.%Y %H:%M") %>
+  <br/>
+  <strong>Identifier:</strong>
+  <%= @reservation.identifier %>
+  <br/>
+  <br/>
+  <strong> Reserved seats (<%= @reserved_seats.count %>) (purple ones): </strong>
+
+  <table bgcolor="#303030">
+    <tbody>
+      <% @plan.length.times do |i| %>
+        <tr>
+        <% @plan[i].length.times do |j| %>
+            <% if @plan[i][j] == 1 %>
+              <% seat = @seats.select {|s| s.pos_x == j && s.pos_y == i} %>
+              <% seat_status = 0 %>
+              <% @reserved_seats.each do |rs| %>
+                <% if rs.seat_id == seat.first.id %>
+                  <% seat_status = 1 %>
+                  <% break %>
+                <% end %>
+              <% end %>
+              <% if seat_status == 1 %>
+                <td> <%= image_tag ("seat-chosen.png"), style:"height: 50%; width: 50%;" %> </td>
+              <% else %>
+                <td> <%= image_tag ("seat-plain.png"), style:"height: 50%; width: 50%;" %> </td> <!-- tutaj sa miejsca siedzace, ale nie twoje! !-->
+              <% end %>
+            <% else %>
+              <td>  </td>
+            <% end %>
+          <% end %>
+        </tr>
+      <% end %>
+      <tr bgcolor="#41B0FF"> 
+        <td colspan="10"> <center> SCREEN </center> </td>
+      </tr>
+    </tbody>
+  </table>
+</p>
+
+<% if current_user != nil %>
+  <%= link_to 'Back to reservations', reservations_path, :class => "btn btn-outline-danger minebtn btn-sm" %>
+<% else %>
+  <%= link_to 'Back to movies', movies_path, :class => "btn btn-outline-danger minebtn btn-sm" %>
+<% end %>

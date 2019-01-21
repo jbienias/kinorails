@@ -1,0 +1,85 @@
+<%= form_with(model: reservation, local: true) do |form| %>
+  <% if reservation.errors.any? %>
+    <div id="error_explanation">
+      <h2 class="error_explanation"><%= pluralize(reservation.errors.count, "error") %> prohibited this reservation from being saved:</h2>
+
+      <ul>
+      <% reservation.errors.full_messages.each do |message| %>
+        <li class="error_explanation"><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+
+  <strong> Reservation for... </strong>
+  <p>
+    <strong>Screening ID:</strong>
+    <%= @screening.id %>
+  </p>
+
+  <p>
+    <strong>Movie:</strong>
+    <%= @screening.movie.title %>
+  </p>
+
+  <p>
+    <strong>Room:</strong>
+    <%= @screening.room.name %>
+  </p>
+
+  <p>
+    <strong>Date:</strong>
+    <%= @screening.date %>
+  </p>
+
+  <strong>Select your seats : </strong>
+  <%= form_for @reservation, method: :post do |f| %>
+
+  <table bgcolor="#303030">
+    <tbody>
+      <% @plan.length.times do |i| %>
+        <tr>
+        <% @plan[i].length.times do |j| %>
+            <% if @plan[i][j] == 1 %>
+              <% seat = @seats.select {|s| s.pos_x == j && s.pos_y == i} %>
+              <% puts seat %>
+              <% seat_status = 0 %>
+              <% @reserved_seats.each do |rs| %>
+                <% if rs.seat_id == seat.first.id %>
+                  <% seat_status = 1 %>
+                  <% break %>
+                <% end %>
+              <% end %>
+              <% if seat_status == 1 %>
+                <td class = "customwidth"> <center> <%= image_tag ("seat-taken.png"), style:"height: 50%; width: 50%;" %> </center> </td> <!--  -->
+              <% else %>
+                <td class = "customwidth"> 
+                  <input type="checkbox" id="<%= "toggle-1-" + i.to_s + j.to_s %>" name="selected_seats[]" value= "<%= seat.first.id %>"/>
+                  <p class = "check"> <label for="<%= "toggle-1-" + i.to_s + j.to_s%>" class = "check" > <span class ="fa fa-plus"></span> </label> </p> 
+                </td>
+              <% end %>
+            <% else %>
+              <td> </td>
+            <% end %>
+        <% end %>
+        </tr>
+      <% end %>
+      <tr bgcolor="#41B0FF"> 
+        <td colspan="10"> <center> SCREEN </center> </td>
+      </tr>
+    </tbody>
+  </table>
+
+  <br/>
+
+  <%= f.hidden_field :reservation, :value => @reservation %>
+  <%= f.hidden_field :screening_id, :value => @screening.id %>
+  <div class="actions">
+    <% if current_user != nil %>
+      <%= link_to 'Back to reservations', reservations_path, :class => "btn btn-outline-danger minebtn btn-sm" %>
+    <% end %> 
+    &nbsp; <%= f.button  :submit, name: "screening_id", value: @screening.id, :class => "btn btn-outline-success minebtn btn-sm" %>
+  </div>
+  <% end %>
+<% end %>
