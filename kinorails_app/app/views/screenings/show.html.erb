@@ -8,8 +8,10 @@
   <%= @screening.room.name %>
   <br/>
   <strong>Date:</strong>
-  <%= @screening.date %>
+  <%= @screening.date.strftime("%d.%m.%Y %H:%M") %>
 </p>
 
-<%= link_to 'Edit', edit_screening_path(@screening), :class => "btn btn-outline-warning minebtn btn-sm" %> &nbsp;
 <%= link_to 'Back to screenings', screenings_path, :class => "btn btn-outline-danger minebtn btn-sm" %>
+&nbsp;
+<%= link_to 'Edit', edit_screening_path(@screening), :class => "btn btn-outline-warning minebtn btn-sm" %> 
+

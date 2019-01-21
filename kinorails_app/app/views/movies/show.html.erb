@@ -15,6 +15,9 @@
   <strong>Length:</strong>
   <%= @movie.length %>
   <br/>
+  <strong>Description:</strong>
+  <%= @movie.description %>
+  <br/>
   <strong>Poster:</strong>
   <br/>
   <% if @movie.poster_link == "" %>
@@ -22,12 +25,15 @@
   <% else %>
     <%= image_tag @movie.poster_link, :height => 200, :crop => "pad" %>
     <br/>
-    <a href = "<%= @movie.poster_link %>">Full view</a>
+    <a href = "<%= @movie.poster_link %>" target="_blank">Full view</a>
   <% end %>
   <br/>
-  <strong>Description:</strong>
-  <%= @movie.description %>
 </p>
+
+<br/>
+<%= link_to 'Back to movies', movies_path, :class => "btn btn-outline-danger minebtn btn-sm" %>
+<br/>
+<br/>
 
 <h3>Available screenings for "<%= @movie.title %>"</h3>
 
@@ -43,7 +49,7 @@
   <tbody>
     <% @screenings.each do |screening| %>
       <tr>
-        <td><%= screening.room_id %></td>
+        <td>&#x2116; <%= screening.room_id %>, name: <%= screening.room.name %></td>
         <td><%= screening.date %></td>   
         <td align = "right"><%= link_to 'New Reservation', {:controller => "reservations", :action => "new", :current_screening_id => screening.id}, :class => "btn btn-outline-success minebtn btn-sm" %></td>
       </tr>
@@ -53,7 +59,7 @@
 
 <% if !current_user.nil? %>
   <% if current_user.admin? %>
-    <%= link_to 'Edit', edit_movie_path(@movie), :class => "btn btn-outline-warning minebtn btn-sm" %>  &nbsp;
+    <%= link_to 'Edit', edit_movie_path(@movie), :class => "btn btn-outline-warning minebtn btn-sm" %>
   <% end %>
 <% end %>
-<%= link_to 'Back to movies', movies_path, :class => "btn btn-outline-danger minebtn btn-sm" %>
+

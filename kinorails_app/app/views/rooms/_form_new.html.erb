@@ -29,6 +29,8 @@
   </table>
 
   <div class="actions">
-    <%= form.submit "Submit", :class => "btn btn-outline-success minebtn btn-sm"%> &nbsp <%= link_to 'Back to rooms', rooms_path, :class => "btn btn-outline-danger minebtn btn-sm" %>
+    <%= link_to 'Back to rooms', rooms_path, :class => "btn btn-outline-danger minebtn btn-sm" %>
+    &nbsp;
+    <%= form.submit "Submit", :class => "btn btn-outline-success minebtn btn-sm"%>  
   </div>
 <% end %>

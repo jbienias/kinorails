@@ -240,17 +240,14 @@
   width: 20%;
 }
 
-.indexborder {
-  border-right:2px solid #444444;
-}
+// .indexborder {
+//   border-right:2px solid #444444;
+//   border-left:2px solid #444444;
+// }
 
 th, td {
   padding: 15px;
   vertical-align:middle !important;
-}
-
-.index td:hover { // #bfebd2 #9AD1C1 #DEDEDE
-  background-color: #303030;
 }
 
 th {
@@ -260,6 +257,11 @@ th {
 td.editaccount {
   vertical-align: top;
   padding: 0px;
+}
+
+// td siedzenia 
+td.customwidth {
+  width: 100px;
 }
 
 // font awesome
@@ -306,6 +308,21 @@ img-inverted {
   right: 0;
   font-family: "Lato", -apple-system, system-ui, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
   color: #7F7F7F;
+}
+
+// p warning guest 
+p.warning {
+  font: bold;
+  color: red;
+  background-color: #303030;
+  text-align: center;
+}
+
+// p and table with margin to center
+.custommargin {
+  margin-left:auto;
+    margin-right:auto;
+   width:50%;
 }
 
 // chairs
@@ -1844,7 +1861,7 @@ label.check {
  }
  
  .table-hover tbody tr:hover {
-   background-color: rgba(0, 0, 0, 0.075);
+   background-color: #303030; //rgba(0, 0, 0, 0.075);
  }
  
  .table-primary,

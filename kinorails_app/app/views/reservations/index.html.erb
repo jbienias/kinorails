@@ -29,7 +29,7 @@
         <%end%>
       <% end %>
         <td><%= reservation.screening.movie.title %> </br>
-            <%= "Room no.: " + reservation.screening.room.id.to_s + ", name: " + reservation.screening.room.name %> </br>
+            Room &#x2116; <%=reservation.screening.room.id.to_s + ", name: " + reservation.screening.room.name %> </br>
             <%= "Date: " + reservation.screening.date.strftime("%d.%m.%Y %H:%M") %></td>
         <td><%= reservation.identifier %></td>
         <td align = "right">

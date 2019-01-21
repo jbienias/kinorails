@@ -80,7 +80,7 @@ class ReservationsController < ApplicationController
     @reservation = Reservation.new(reservation_params)
 
     if params[:selected_seats].nil? || params[:selected_seats].length == 0
-      flash[:notice] = "Nie wybrano żadnych miejsc. Spróbuj ponownie!"
+      flash[:notice] = "No seats are chosen! Try again."
       render :new
     else
 

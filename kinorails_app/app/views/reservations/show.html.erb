@@ -3,7 +3,7 @@
 <strong><h2>Reservation</h2> </strong>
 
 <% if current_user.nil? %>
-  <strong> GUEST! REMEMBER TO TAKE A SCREENSHOT OF YOUR RESERVATION AND SAVE IT SOMEWHERE SAFE! </strong>
+  <p class = "warning"> GUEST! REMEMBER TO TAKE A SCREENSHOT OF YOUR RESERVATION AND SAVE IT SOMEWHERE SAFE! </p>
 <% end %>
 
 <p>
@@ -15,13 +15,12 @@
   <%end%>
   <br/>
   <strong>Screening:</strong>
-  <%= @reservation.screening_id %>
+  '<%= @reservation.screening.movie.title %>' in  <%= "Room no.: " + @reservation.screening.room.id.to_s + ", name: " + @reservation.screening.room.name %> at <%= @reservation.screening.date.strftime("%d.%m.%Y %H:%M") %>
   <br/>
   <strong>Identifier:</strong>
   <%= @reservation.identifier %>
-</p>
-
-<p>
+  <br/>
+  <br/>
   <strong> Reserved seats (<%= @reserved_seats.count %>) (purple ones): </strong>
 
   <table bgcolor="#303030">
@@ -56,4 +55,6 @@
   </table>
 </p>
 
-<%= link_to 'Back to reservations', reservations_path, :class => "btn btn-outline-danger minebtn btn-sm" %>
+<% if current_user != nil %>
+  <%= link_to 'Back to reservations', reservations_path, :class => "btn btn-outline-danger minebtn btn-sm" %>
+<% end %>

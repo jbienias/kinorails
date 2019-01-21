@@ -5,6 +5,7 @@
 <table class="table table-stripped table-hover index indexborder">
   <thead>
     <tr>
+    <th class="index"><%= "Identifier" %></th>
     <th class="index"><%= sort_link "name" %></th>
       <th colspan="3"></th>
     </tr>
@@ -13,6 +14,7 @@
   <tbody>
     <% @rooms.each do |room| %>
       <tr>
+        <td> &#x2116; <%= room.id %></td>
         <td><%= room.name %></td>
         <td align = "right">
           <%= link_to(raw('<span class="fa fa-eye"></span>'), room, :class => "btn btn-outline-secondary minebtn btn-sm") %> 
@@ -47,4 +49,4 @@
 
 <br>
 
-<%= link_to 'New Room', new_room_path, :class => "btn btn-outline-success minebtn btn-sm" %>
+<%= link_to(raw('<b>New Room</b> &nbsp; <span class="fa fa-plus"></span>'), new_room_path, :class => "btn btn-outline-success minebtn btn-sm") %>

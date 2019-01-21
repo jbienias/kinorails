@@ -9,4 +9,6 @@
   <% if current_user.admin? %>
     <p> You're an admin. You can do basically anything except to have fun in our cinema. Work hard! </p>
   <% end %>
+<% else %>
+    <p> You're a guest. You have access to movies' list, it's screenings and you can make a reservation. For further optios consider registration. </p>
 <% end %>

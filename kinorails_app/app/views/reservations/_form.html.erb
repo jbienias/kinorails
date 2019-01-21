@@ -52,9 +52,9 @@
                 <% end %>
               <% end %>
               <% if seat_status == 1 %>
-                <td> <center> <%= image_tag ("seat-taken.png"), style:"height: 50%; width: 50%;" %> </center> </td> <!--  -->
+                <td class = "customwidth"> <center> <%= image_tag ("seat-taken.png"), style:"height: 50%; width: 50%;" %> </center> </td> <!--  -->
               <% else %>
-                <td> 
+                <td class = "customwidth"> 
                   <input type="checkbox" id="<%= "toggle-1-" + i.to_s + j.to_s %>" name="selected_seats[]" value= "<%= seat.first.id %>"/>
                   <p class = "check"> <label for="<%= "toggle-1-" + i.to_s + j.to_s%>" class = "check" > <span class ="fa fa-plus"></span> </label> </p> 
                 </td>
@@ -76,7 +76,10 @@
   <%= f.hidden_field :reservation, :value => @reservation %>
   <%= f.hidden_field :screening_id, :value => @screening.id %>
   <div class="actions">
-    <%= f.button  :submit, name: "screening_id", value: @screening.id, :class => "btn btn-outline-success minebtn btn-sm" %> &nbsp; <%= link_to 'Back to reservations', reservations_path, :class => "btn btn-outline-danger minebtn btn-sm" %>
+    <% if current_user != nil %>
+      <%= link_to 'Back to reservations', reservations_path, :class => "btn btn-outline-danger minebtn btn-sm" %>
+    <% end %> 
+    &nbsp; <%= f.button  :submit, name: "screening_id", value: @screening.id, :class => "btn btn-outline-success minebtn btn-sm" %>
   </div>
   <% end %>
 <% end %>

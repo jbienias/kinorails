@@ -47,11 +47,39 @@
   <tbody>
     <% @movies.each do |movie| %>
       <tr>
-        <td><%= movie.title %></td>
-        <td><%= movie.director %></td>
-        <td><%= movie.length %></td>
+        <td data-toggle="modal" data-target="#myModalRow" + "<%=" + movie.title + "%>"><%= movie.title %></td>
+        <td data-toggle="modal" data-target="#myModalRow" + "<%=" + movie.title + "%>"><%= movie.director %></td>
+        <td data-toggle="modal" data-target="#myModalRow" + "<%=" + movie.title + "%>"><%= movie.length %></td>
         <td> <a data-toggle="modal" href="#myModalPoster" + "<%=" + movie.title + "%>"> 
         <%= image_tag movie.poster_link, :height => 50, :crop => "pad" %> </a> </td> 
+
+        <!-- Modal for show row -->
+        <div class="modal fade" id="myModalRow" + "<%=" + movie.title + "%>" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+          <div class="modal-dialog" role="document">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h4 class="modal-title" id="myModalLabel"><b><%= movie.title %></b>'s quick view</h4>
+              </div>
+              <div class="modal-body">
+                <strong>Title:</strong>
+                <%= movie.title %>
+                <br/>
+                <strong>Director:</strong>
+                <%= movie.director %>
+                <br/>
+                <strong>Country of origin:</strong>
+                <%= movie.country_of_origin %>
+                <br/>
+                <strong>Length:</strong>
+                <%= movie.length %>
+                <br/>
+                <strong>Description:</strong>
+                <%= movie.description %>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- End of modal for show row -->
 
         <!-- Modal for poster -->
         <div class="modal fade" id="myModalPoster" + "<%=" + movie.title + "%>" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
@@ -109,7 +137,7 @@
 <br>
 
 <% if !current_user.nil? && current_user.admin? %>
-  <%= link_to(raw('<b>New Movie</b><span class="fa fa-plus"></span>'), new_movie_path, :class => "btn btn-outline-success minebtn btn-sm") %>
+  <%= link_to(raw('<b>New Movie</b> &nbsp; <span class="fa fa-plus"></span>'), new_movie_path, :class => "btn btn-outline-success minebtn btn-sm") %>
 <% end %>
 
 

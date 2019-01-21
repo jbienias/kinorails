@@ -16,8 +16,8 @@
     <% @screenings.each do |screening| %>
       <tr>
         <td><%= screening.movie.title %></td>
-        <td><%= "Room no.: " + screening.room.id.to_s + ", name: " + screening.room.name %></td>
-        <td><%= screening.date %></td>
+        <td> &#x2116; <%= screening.room.id.to_s + ", name: " + screening.room.name %></td>
+        <td><%= screening.date.strftime("%d.%m.%Y %H:%M") %></td>
         <td align = "right">
           <%= link_to(raw('<span class="fa fa-eye"></span>'), screening, :class => "btn btn-outline-secondary minebtn btn-sm") %>
           &nbsp;
@@ -37,7 +37,7 @@
                   </div>
                   <div class="modal-body">
                     Are you sure you want to delete this movie: <br/>
-                    '<%= screening.movie.title %>' in  <%= "Room no.: " + screening.room.id.to_s + ", name: " + screening.room.name %> at <%= screening.date %>?
+                    '<%= screening.movie.title %>' <br/> in  <%= "Room no.: " + screening.room.id.to_s + ", name: " + screening.room.name %> <br/> at <%= screening.date.strftime("%d.%m.%Y %H:%M") %>?
                   </div>
                   <div class="modal-footer">
                     <button type="button" class="btn btn-outline-secondary minebtn btn-sm" data-dismiss="modal">No</button>
@@ -54,4 +54,4 @@
 </table>
 
 <br>
-<%= link_to(raw('<b>New Screening</b> <span class="fa fa-plus"></span>'), new_screening_path, :class => "btn btn-outline-success minebtn btn-sm") %>
+<%= link_to(raw('<b>New Screening</b> &nbsp; <span class="fa fa-plus"></span>'), new_screening_path, :class => "btn btn-outline-success minebtn btn-sm") %>
