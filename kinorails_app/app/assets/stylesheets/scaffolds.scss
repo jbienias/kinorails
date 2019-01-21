@@ -281,10 +281,16 @@ div.divrightoriented {
   font-size: 1rem;
 }
 
-// errors are pretty too, erros in red and big
+// errors are pretty too, error fields border
+.field_with_errors input {
+  border: 2px solid #F28576 !important;
+  border-radius: 0.2rem;
+}
+
+// errors are pretty too, errors in red and big
 .error_explanation {
   color: #F28576;
-  font-family: "Montserrat", -apple-system, system-ui, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  font-family: "Lato", -apple-system, system-ui, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
 }
 
 // invert colors of an image
