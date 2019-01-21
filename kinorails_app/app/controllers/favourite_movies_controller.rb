@@ -29,12 +29,13 @@ class FavouriteMoviesController < ApplicationController
       @favourite_movie.movie_id = @movie.id
       @favourite_movie.user_id = current_user.id
       if @favourite_movie.save
-        redirect_to favourite_movies_url, notice: 'Favourite movie was successfully created.'
+        redirect_to movies_url, notice: 'Favourite movie was successfully added.'
       else
         redirect_to movies_url, notice: "Favourite movie wasn't created."
       end
     else
-      redirect_to movies_url, notice: "Favourite movie is already present!"
+      @already.destroy_all
+      redirect_to movies_url, notice: "Favourite movie was successfully deleted."
     end
   end
 
@@ -44,7 +45,7 @@ class FavouriteMoviesController < ApplicationController
 
   def destroy
     @favourite_movie.destroy
-    redirect_to favourite_movies_url, notice: 'Favourite movie was successfully destroyed.'
+    redirect_to favourite_movies_url, notice: 'Favourite movie was successfully deleted.'
   end
 
   private

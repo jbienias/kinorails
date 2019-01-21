@@ -6,6 +6,9 @@ class MoviesController < ApplicationController
   helper_method :sort_column, :sort_direction
 
   def index
+    if current_user!=nil
+      @favourite_movies_ids = FavouriteMovie.all.where(:user_id => current_user.id).pluck(:movie_id)
+    end
     if params[:search]
       @movies = Movie.search(params[:search]).order("title DESC")
     else
@@ -21,9 +24,7 @@ class MoviesController < ApplicationController
     @movie = Movie.new
 
     respond_to do |format|
-
       format.html
-  
       format.js
     end
   end
