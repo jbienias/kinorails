@@ -220,7 +220,7 @@
  
  // my mods
  .index {
-  width: 13%;
+  width: 20%;
 }
 
 .indexborder {
@@ -252,7 +252,6 @@ font-family: fontawesome !important;
 span.star {
   color: #BE7D16
 }
-
 // div in navbar
 div.divrightoriented {
   text-align: right;
@@ -284,6 +283,45 @@ img-inverted {
   color: #7F7F7F;
 }
 
+// chairs
+/* Checkbox Hack */
+
+input[type=checkbox] {
+  position: absolute;
+  top: -9999px;
+  left: -9999px;
+}
+label { 
+ -webkit-appearance: push-button;
+ -moz-appearance: button; 
+ display: block;
+ margin: 0 0 0 0;
+ cursor: pointer;
+ align-self: center;
+}
+
+/* Default State */
+p.check {
+  background-image: image-url("seat-plain.png");
+  background-repeat: no-repeat;
+  background-position: bottom;
+  background-size: 50% 90%;
+}
+
+/* Toggled State */
+input[type=checkbox]:checked ~ p.check {
+  background-image: image-url("seat-chosen.png");
+  background-repeat: no-repeat;
+  background-position: bottom; 
+  background-size: 50% 90%;
+}
+
+label.check {
+  display: block;
+  color: #303030;
+  align-self: center;
+  opacity: 0;
+}
 // end
 
  caption {

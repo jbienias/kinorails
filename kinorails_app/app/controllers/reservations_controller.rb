@@ -79,34 +79,35 @@ class ReservationsController < ApplicationController
 
     @reservation = Reservation.new(reservation_params)
 
-    if params[:selected_seats].nil?
+    if params[:selected_seats].nil? || params[:selected_seats].length == 0
       flash[:notice] = "Nie wybrano żadnych miejsc. Spróbuj ponownie!"
       render :new
-    end
-
-    err_count = 0
-    ss_count = 0
-    if current_user != nil
-      @reservation.user_id = current_user.id
-    end
-
-    if @reservation.save
-      params[:selected_seats].each do |ss|
-      @selected_seat = create_reserved_seat(@reservation.id, ss)
-      if @selected_seat.save
-         ss_count = ss_count + 1
-       else
-         err_count = err_count + 1
-       end
-    end
-
-    if err_count > 0
-      ReservedSeat.where(:reservation_id => @reservation.id).destroy_all
-      @reservation.destroy
-      flash[:notice] = "In the meantime somebody already booked some of your chosen seats (count: #{err_count}). Choose new seats to book!"
-      render :new
     else
-      redirect_to @reservation, notice: "Reservation was successfully created and you've booked #{ss_count} seats!"
+
+      err_count = 0
+      ss_count = 0
+      if current_user != nil
+        @reservation.user_id = current_user.id
+      end
+
+      if @reservation.save
+        params[:selected_seats].each do |ss|
+        @selected_seat = create_reserved_seat(@reservation.id, ss)
+        if @selected_seat.save
+            ss_count = ss_count + 1
+          else
+            err_count = err_count + 1
+          end
+      end
+
+      if err_count > 0
+        ReservedSeat.where(:reservation_id => @reservation.id).destroy_all
+        @reservation.destroy
+        flash[:notice] = "In the meantime somebody already booked some of your chosen seats (count: #{err_count}). Choose new seats to book!"
+        render :new
+      else
+        redirect_to @reservation, notice: "Reservation was successfully created and you've booked #{ss_count} seats!"
+      end
     end
   end
 end

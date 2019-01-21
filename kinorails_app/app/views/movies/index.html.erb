@@ -7,10 +7,8 @@
     <tr>
       <th class="index"><%= sort_link "title" %></th>
       <th class="index"><%= sort_link "director" %></th>
-      <th class="index"><%= sort_link "country_of_origin" %></th>
       <th class="index"><%= sort_link "length" %></th>
-      <th class="index"><%= sort_link "poster_link" %></th>
-      <th class="index"><%= sort_link "description" %></th>
+      <th class="index"><%= sort_link "poster_link", "Poster" %></th>
       <th colspan="3"></th>
     </tr>
   </thead>
@@ -20,10 +18,8 @@
       <tr>
         <td><%= movie.title %></td>
         <td><%= movie.director %></td>
-        <td><%= movie.country_of_origin %></td>
         <td><%= movie.length %></td>
-        <td><%= movie.poster_link %></td>
-        <td><%= movie.description %></td>
+        <td><%= image_tag movie.poster_link, :height => 50, :crop => "pad" %></td> 
         <td align = "right">
           <%= link_to 'Show', movie, :class => "btn btn-outline-secondary minebtn btn-sm" %>
           &nbsp; 

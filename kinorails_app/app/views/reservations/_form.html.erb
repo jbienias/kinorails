@@ -35,15 +35,15 @@
 
   <strong>Select your seats : </strong>
   <%= form_for @reservation, method: :post do |f| %>
-  <p> -------PLAN--------- </p>
 
-  <table>
+  <table bgcolor="#303030">
     <tbody>
       <% @plan.length.times do |i| %>
         <tr>
         <% @plan[i].length.times do |j| %>
             <% if @plan[i][j] == 1 %>
               <% seat = @seats.select {|s| s.pos_x == j && s.pos_y == i} %>
+              <% puts seat %>
               <% seat_status = 0 %>
               <% @reserved_seats.each do |rs| %>
                 <% if rs.seat_id == seat.first.id %>
@@ -52,9 +52,12 @@
                 <% end %>
               <% end %>
               <% if seat_status == 1 %>
-                <td> <%= image_tag ("seat-taken.png"), style:"height: 50%; width: 50%;" %> </td>
+                <td> <center> <%= image_tag ("seat-taken.png"), style:"height: 50%; width: 50%;" %> </center> </td> <!--  -->
               <% else %>
-                <td> <%= check_box_tag "selected_seats[]", seat.first.id %> </td>
+                <td> 
+                  <input type="checkbox" id="<%= "toggle-1-" + i.to_s + j.to_s %>" name="selected_seats[]" value= "<%= seat.first.id %>"/>
+                  <p class = "check"> <label for="<%= "toggle-1-" + i.to_s + j.to_s%>" class = "check" > <span class ="fa fa-plus"></span> </label> </p> 
+                </td>
               <% end %>
             <% else %>
               <td> </td>
@@ -62,8 +65,13 @@
         <% end %>
         </tr>
       <% end %>
+      <tr bgcolor="#41B0FF"> 
+        <td colspan="10"> <center> SCREEN </center> </td>
+      </tr>
     </tbody>
   </table>
+
+  <br/>
 
   <%= f.hidden_field :reservation, :value => @reservation %>
   <%= f.hidden_field :screening_id, :value => @screening.id %>
