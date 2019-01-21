@@ -1,9 +1,9 @@
-<p id="notice"><%= notice %></p>
+<p id="notice"><%= modified_notice %></p>
 
 <strong><h2>Reservation</h2> </strong>
 
 <% if current_user.nil? %>
-  <strong> GUEST! REMEMBER TO TAKE A SCREENSHOT OF YOUR RESERVATION AND SAVE IT SOMEWHERE SAFE! </strong>
+  <p class = "warning"> GUEST! REMEMBER TO TAKE A SCREENSHOT OF YOUR RESERVATION AND SAVE IT SOMEWHERE SAFE! </p>
 <% end %>
 
 <p>
@@ -13,22 +13,17 @@
   <% else %>
     <%= @reservation.user.username %>
   <%end%>
-</p>
-
-<p>
+  <br/>
   <strong>Screening:</strong>
-  <%= @reservation.screening_id %>
-</p>
-
-<p>
+  '<%= @reservation.screening.movie.title %>' in  <%= "Room no.: " + @reservation.screening.room.id.to_s + ", name: " + @reservation.screening.room.name %> at <%= @reservation.screening.date.strftime("%d.%m.%Y %H:%M") %>
+  <br/>
   <strong>Identifier:</strong>
   <%= @reservation.identifier %>
-</p>
+  <br/>
+  <br/>
+  <strong> Reserved seats (<%= @reserved_seats.count %>) (purple ones): </strong>
 
-<p>
-<strong> Reserved seats (<%= @reserved_seats.count %>) (X's): </strong>
-
-<table>
+  <table bgcolor="#303030">
     <tbody>
       <% @plan.length.times do |i| %>
         <tr>
@@ -43,19 +38,23 @@
                 <% end %>
               <% end %>
               <% if seat_status == 1 %>
-                <td> [X] </td>
+                <td> <%= image_tag ("seat-chosen.png"), style:"height: 50%; width: 50%;" %> </td>
               <% else %>
-                <td> [_/] </td> <!-- tutaj sa miejsca siedzace, ale nie twoje! !-->
+                <td> <%= image_tag ("seat-plain.png"), style:"height: 50%; width: 50%;" %> </td> <!-- tutaj sa miejsca siedzace, ale nie twoje! !-->
               <% end %>
             <% else %>
-              <td> [ ] </td>
+              <td>  </td>
             <% end %>
-        <% end %>
+          <% end %>
         </tr>
       <% end %>
+      <tr bgcolor="#41B0FF"> 
+        <td colspan="10"> <center> SCREEN </center> </td>
+      </tr>
     </tbody>
   </table>
+</p>
 
-  </p>
-
-<%= link_to 'Back', reservations_path %>
+<% if current_user != nil %>
+  <%= link_to 'Back to reservations', reservations_path, :class => "btn btn-outline-danger minebtn btn-sm" %>
+<% end %>

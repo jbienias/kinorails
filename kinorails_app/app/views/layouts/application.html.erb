@@ -1,7 +1,15 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>KinorailsApp</title>
+    <title>KinoRails</title>
+
+    <!-- jQuery library -->
+      <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+    <!-- Latest compiled JavaScript -->
+      <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
+    <!-- Font Awesome -->
+      <link href="https://netdna.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet" type="text/css"> 
+  
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
 
@@ -10,40 +18,103 @@
   </head>
 
   <body>
-
-    <nav class="navbar navbar-default">
-      <a class="navbar-brand" href="/pages/home">KinoRails</a>
-      <p class="navbar-text pull-right">
-      <% if user_signed_in? %>
-        Logged in as <strong><%= current_user.username %></strong>.
-        <%= link_to 'Edit profile', edit_user_registration_path, :class => 'navbar-link' %> |
-        <%= link_to "Logout", destroy_user_session_path, method: :delete, :class => 'navbar-link'  %>
+    <div class="container">
+      <% if content_for?(:navbar) %>
+        <%= yield(:navbar) %>
       <% else %>
-        <%= link_to "Sign up", new_user_registration_path, :class => 'navbar-link'  %> |
-        <%= link_to "Login", new_user_session_path, :class => 'navbar-link'  %>
+        <nav class="navbar navbar-expand-lg navbar-light bg-light">
+          <span class="fa fa-film"></span> &nbsp; 
+          <b><a class="navbar-brand" href="/pages/home">KinoRails</a></b> &nbsp; &nbsp; &nbsp; &nbsp; 
+
+          <ul class="navbar-nav mr-auto">
+          </ul>
+
+          <ul class="navbar-nav mr-auto">
+            <li class="nav-item active">
+              <b><%= link_to "Movies", movies_url, :class => 'navbar-link' %></b>
+            </li>
+          </ul>
+
+          <% if current_user != nil && current_user.admin? %>
+            <ul class="navbar-nav mr-auto">
+              <li class="nav-item active">
+                <b><%= link_to "Rooms", rooms_url, :class => 'navbar-link'  %></b>
+              </li>
+            </ul>
+          <% end %>
+
+          <% if current_user != nil && current_user.admin? %>
+            <ul class="navbar-nav mr-auto">
+              <li class="nav-item active">
+                <b><%= link_to "Screenings", screenings_url, :class => 'navbar-link'  %></b>
+              </li>
+            </ul>
+          <% end %>
+
+          <% if current_user != nil %>
+            <ul class="navbar-nav mr-auto">
+              <li class="nav-item active">
+                <b><%= link_to "Reservations", reservations_url, :class => 'navbar-link' %></b>
+              </li>
+            </ul>
+          <% end %>
+
+          <% if current_user != nil && current_user.user? %>
+            <ul class="navbar-nav mr-auto">
+              <li class="nav-item active">
+                <b><%= link_to "Favourite Movies", favourite_movies_url, :class => 'navbar-link'  %></b>
+              </li>
+            </ul>
+          <% end %>
+
+
+          <div class="divrightoriented">
+            <% if user_signed_in? %>
+              <% if current_user.admin? %> 
+                <span class='fa fa-wrench'></span> 
+              <% end %>
+              <% if current_user.user? %> 
+                <span class='fa fa-user'></span> 
+              <% end %>
+              (<strong><%= current_user.username %></strong>) &nbsp;
+              <%= link_to 'Edit profile', edit_user_registration_path, :class => "btn btn-outline-warning minebtn btn-sm" %> &nbsp;
+              <%= link_to "Logout", destroy_user_session_path, method: :delete, :class => "btn btn-outline-danger minebtn btn-sm"  %>
+            <% else %>
+              <span class='fa fa-question'></span> (guest) &nbsp;
+              <%= link_to "Sign up", new_user_registration_path, :class => "btn btn-outline-primary minebtn btn-sm"  %> &nbsp;
+              <%= link_to "Login", new_user_session_path, :class => "btn btn-outline-info minebtn btn-sm"  %>
+            <% end %>
+          </div>
+        </nav>
       <% end %>
-      </p>
-      </form>
-    </nav>
 
-  <p>
-    <b>MENU: </b>
-    <%= link_to "Movies", movies_url, :class => 'navbar-link'  %>
-    <%= link_to "Rooms", rooms_url, :class => 'navbar-link'  %>
-    <%= link_to "Screenings", screenings_url, :class => 'navbar-link'  %>
-    <%= link_to "Reservations", reservations_url, :class => 'navbar-link' %>
-    <%= link_to "Favourite Movies", favourite_movies_url, :class => 'navbar-link'  %>
-  </p>
+  <!--
+      <% if notice %>
+        <p class="alert alert-success"><%= notice %></p>
+      <% end %>
+      <% if alert %>
+        <p class="alert alert-danger"><%= alert %></p>
+      <% end %>
+  -->
 
-<!--
-    <% if notice %>
-      <p class="alert alert-success"><%= notice %></p>
-    <% end %>
-    <% if alert %>
-      <p class="alert alert-danger"><%= alert %></p>
-    <% end %>
--->
+      <%= yield %>
+      <!-- jQuery library -->
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+      <!-- Latest compiled JavaScript -->
+        <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
+    </div>
 
-    <%= yield %>
+    <!-- jQuery library -->
+      <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+    <!-- Latest compiled JavaScript -->
+      <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
   </body>
+
+  <br/>
+  <br/>
+  <br/>
+  <br/>
+
+  <footer class="customfooter">Contact admin at admin@kinorails.com <br> &copy; 2019</footer>
 </html>
+

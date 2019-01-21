@@ -19,4 +19,9 @@ class Movie < ApplicationRecord
 
   validates :description, \
   allow_empty: false
+
+  private
+    def self.search(search)
+      where("title LIKE ?", "%#{search}%") # ILIKE on postgreSQL and Heroku, LIKE on local
+    end
 end

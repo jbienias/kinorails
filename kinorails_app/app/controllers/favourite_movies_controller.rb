@@ -3,12 +3,21 @@ class FavouriteMoviesController < ApplicationController
   before_action :check_if_user_not_admin
   before_action :set_favourite_movie, only: [:destroy]
 
+  helper_method :sort_column, :sort_direction
 
   def index
     if current_user.admin?
-      @favourite_movies = FavouriteMovie.all
+      if params[:search]
+        @favourite_movies = FavouriteMovie.search(params[:search]).order("movie_id DESC")
+      else
+        @favourite_movies = FavouriteMovie.all.order("#{sort_column} #{sort_direction}")
+      end
     else
-      @favourite_movies = FavouriteMovie.all.where(:user_id => current_user.id)
+      if params[:search]
+        @favourite_movies = FavouriteMovie.search(params[:search]).order("movie_id DESC")
+      else
+        @favourite_movies = FavouriteMovie.all.where(:user_id => current_user.id).order("#{sort_column} #{sort_direction}")
+      end
     end
   end
 
@@ -20,12 +29,13 @@ class FavouriteMoviesController < ApplicationController
       @favourite_movie.movie_id = @movie.id
       @favourite_movie.user_id = current_user.id
       if @favourite_movie.save
-        redirect_to favourite_movies_url, notice: 'Favourite movie was successfully created.'
+        redirect_to movies_url, notice: 'Favourite movie was successfully added.'
       else
         redirect_to movies_url, notice: "Favourite movie wasn't created."
       end
     else
-      redirect_to movies_url, notice: "Favourite movie is already present!"
+      @already.destroy_all
+      redirect_to movies_url, notice: "Favourite movie was successfully deleted."
     end
   end
 
@@ -35,7 +45,7 @@ class FavouriteMoviesController < ApplicationController
 
   def destroy
     @favourite_movie.destroy
-    redirect_to favourite_movies_url, notice: 'Favourite movie was successfully destroyed.'
+    redirect_to favourite_movies_url, notice: 'Favourite movie was successfully deleted.'
   end
 
   private
@@ -50,5 +60,18 @@ class FavouriteMoviesController < ApplicationController
   
     def set_favourite_movie
       @favourite_movie = FavouriteMovie.find(params[:id])
+    end
+
+    # sorting 
+    def sortable_columns
+      ["id"]
+    end
+  
+    def sort_column
+      sortable_columns.include?(params[:column]) ? params[:column] : "id"
+    end
+  
+    def sort_direction
+      %w[asc desc].include?(params[:direction]) ? params[:direction] : "asc"
     end
 end

@@ -3,8 +3,14 @@ class RoomsController < ApplicationController
   before_action :check_if_user_admin
   before_action :set_room, only: [:show, :edit, :update, :destroy]
 
+  helper_method :sort_column, :sort_direction
+
   def index
-    @rooms = Room.all
+    if params[:search]
+      @rooms = Room.search(params[:search]).order("name DESC")
+    else
+      @rooms = Room.all.order("#{sort_column} #{sort_direction}")
+    end
   end
 
   def show
@@ -24,46 +30,51 @@ class RoomsController < ApplicationController
 
     err_count = 0
     seats_created = 0
-    arr = load_seats_location(@room.layout_file_path)
-    seat_arr = []
+    if @room.layout_file_path.to_s.empty? || !File.file?(@room.layout_file_path)
+      flash.now[:notice] = 'Room could not be saved. Make sure that the file you provided exists!'
+      render :new
+    else
+      arr = load_seats_location(@room.layout_file_path)
+      seat_arr = []
 
-    arr.each_with_index do |row, i|
-      row.each_with_index do |column, j|
+      arr.each_with_index do |row, i|
+        row.each_with_index do |column, j|
 
-        type_of_seat_tmp = change_type_of_seat(arr[i][j])
+          type_of_seat_tmp = change_type_of_seat(arr[i][j])
 
-        if type_of_seat_tmp != -1
-          @seat = create_seat(j, i, type_of_seat_tmp)
-          seat_arr << @seat
-        else
-          err_count += 1
-        end
-
-      end
-    end
-
-    if err_count == 0
-      if @room.save
-        seat_arr.each do |s|
-          assign_room_id_to_seat(s, @room.id)
-          if s.save
-            if s.type_of_seat == 1
-              seats_created += 1
-            end
+          if type_of_seat_tmp != -1
+            @seat = create_seat(j, i, type_of_seat_tmp)
+            seat_arr << @seat
           else
             err_count += 1
           end
+
         end
-        redirect_to @room, notice: "Room and #{seats_created} seats were successfully created."
+      end
+
+      if err_count == 0
+        if @room.save
+          seat_arr.each do |s|
+            assign_room_id_to_seat(s, @room.id)
+            if s.save
+              if s.type_of_seat == 1
+                seats_created += 1
+              end
+            else
+              err_count += 1
+            end
+          end
+          redirect_to @room, notice: "Room and #{seats_created} seats were successfully created."
+        else
+          Seat.where(:room_id => @room.id).destroy_all
+          @room.destroy
+          flash[:notice] = "Room could not be saved!"
+          render :new
+        end
       else
-        Seat.where(:room_id => @room.id).destroy_all
-        @room.destroy
-        flash[:notice] = "Room could not be saved!"
+        flash.now[:notice] = 'Room could not be saved. Make sure that the file you provided is correct!'
         render :new
       end
-    else
-      flash.now[:notice] = 'Room could not be saved. Make sure that the file you provided is correct!'
-      render :new
     end
   end
 
@@ -76,8 +87,17 @@ class RoomsController < ApplicationController
   end
 
   def destroy
-    Seat.where(:room_id => @room.id).destroy_all
-    Screening.where(:room_id => @room.id).destroy_all
+    Seat.all.where(:room_id => @room.id).destroy_all
+    screenings = Screening.all.where(:room_id => @room.id)
+    screenings.each do |screening|
+      reservations = Reservation.all.where(:screening_id => screening.id)
+        reservations.each do |reservation|
+          reservedseats = ReservedSeat.all.where(:reservation_id => reservation.id)
+          reservedseats.destroy_all
+        end
+        reservations.destroy_all
+    end
+    screenings.destroy_all
     @room.destroy
     redirect_to rooms_url, notice: 'Room was successfully destroyed.'
   end
@@ -148,5 +168,18 @@ class RoomsController < ApplicationController
       end
 
       plan
+    end
+
+    # sorting 
+    def sortable_columns
+      ["name"]
+    end
+  
+    def sort_column
+      sortable_columns.include?(params[:column]) ? params[:column] : "name"
+    end
+  
+    def sort_direction
+      %w[asc desc].include?(params[:direction]) ? params[:direction] : "asc"
     end
 end

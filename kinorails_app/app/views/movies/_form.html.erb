@@ -1,47 +1,56 @@
 <%= form_with(model: movie, local: true) do |form| %>
   <% if movie.errors.any? %>
     <div id="error_explanation">
-      <h2><%= pluralize(movie.errors.count, "error") %> prohibited this movie from being saved:</h2>
+      <h2 class="error_explanation"><%= pluralize(movie.errors.count, "error") %> prohibited this movie from being saved:</h2>
 
       <ul>
       <% movie.errors.full_messages.each do |message| %>
-        <li><%= message %></li>
+        <li class="error_explanation"><%= message %></li>
       <% end %>
       </ul>
     </div>
   <% end %>
 
-  <div class="field">
-    <%= form.label :title %>
-    <%= form.text_field :title %>
-  </div>
+  <table>
+    <tr>
+      <th></th>
+      <th></th>
+    </tr>
 
-  <div class="field">
-    <%= form.label :director %>
-    <%= form.text_field :director %>
-  </div>
+    <tr>
+      <td> <%= form.label :title %> </td>
+      <td> <%= form.text_field :title %> </td>
+    </tr>
 
-  <div class="field">
-    <%= form.label :country_of_origin %>
-    <%= form.text_field :country_of_origin %>
-  </div>
+    <tr>
+      <td> <%= form.label :director %> </td>
+      <td> <%= form.text_field :director %> </td>
+    </tr>
 
-  <div class="field">
-    <%= form.label :length %>
-    <%= form.number_field :length %>
-  </div>
+    <tr>
+      <td> <%= form.label :country_of_origin %> </td>
+      <td> <%= form.text_field :country_of_origin %> </td>
+    </tr>
 
-  <div class="field">
-    <%= form.label :poster_link %>
-    <%= form.text_field :poster_link %>
-  </div>
+    <tr>
+      <td> <%= form.label :length %> </td>
+      <td> <%= form.number_field :length %> </td>
+    </tr>
 
-  <div class="field">
-    <%= form.label :description %>
-    <%= form.text_area :description %>
-  </div>
+    <tr>
+      <td> <%= form.label :poster_link %> </td>
+      <td> <%= form.text_field :poster_link %> </td>
+    </tr>
+
+    <tr>
+      <td> <%= form.label :description %> </td>
+      <td> <%= form.text_area :description %> </td>
+    </tr>
+  </table>
 
   <div class="actions">
-    <%= form.submit %>
+    <%= link_to 'Back to movies', movies_path, :class => "btn btn-outline-danger minebtn btn-sm" %>
+    &nbsp; 
+    <%= form.submit "Submit", :class => "btn btn-outline-success minebtn btn-sm" %> 
   </div>
 <% end %>

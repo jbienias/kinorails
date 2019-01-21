@@ -1,10 +1,16 @@
 class ScreeningsController < ApplicationController
   #before_action :authenticate_user!
-  before_action :check_if_user_admin, only: [:new, :create, :edit, :update, :destroy]
+  before_action :check_if_user_admin, only: [:index, :new, :create, :edit, :update, :destroy]
   before_action :set_screening, only: [:show, :edit, :update, :destroy]
 
+  helper_method :sort_column, :sort_direction
+
   def index
-    @screenings = Screening.all
+    if params[:search]
+      @screenings = Screening.search(params[:search]).order("date DESC")
+    else
+      @screenings = Screening.all.order("#{sort_column} #{sort_direction}")
+    end
   end
 
   def show
@@ -36,6 +42,8 @@ class ScreeningsController < ApplicationController
   end
 
   def update
+    @movies = Movie.all.order(:title)
+    @rooms = Room.all.order(:name)
     if @screening.update(screening_params)
       redirect_to @screening, notice: 'Screening was successfully updated.'
     else
@@ -69,5 +77,18 @@ class ScreeningsController < ApplicationController
 
     def screening_params
       params.require(:screening).permit(:movie_id, :room_id, :date)
+    end
+
+    # sorting
+    def sortable_columns
+      ["movie_id", "room_id", "date"]
+    end
+  
+    def sort_column
+      sortable_columns.include?(params[:column]) ? params[:column] : "date"
+    end
+  
+    def sort_direction
+      %w[asc desc].include?(params[:direction]) ? params[:direction] : "asc"
     end
 end

@@ -1,35 +1,33 @@
-<p id="notice"><%= notice %></p>
+<p id="notice"><%= modified_notice %></p>
 
 <p>
   <strong>Name:</strong>
   <%= @room.name %>
 </p>
 
-<p>
-  <strong>Layout file path:</strong>
-  <%= @room.layout_file_path %>
-</p>
 
-</p>
-
-<p> -------PLAN--------- </p>
-
-<table>
+<table bgcolor="#303030">
   <tbody>
     <% @plan.length.times do |i| %>
       <tr>
       <% @plan[i].length.times do |j| %>
           <% if @plan[i][j] == 1 %>
-            <td> X </td>
+            <td> <%= image_tag ("seat-plain.png"), style:"height: 50%; width: 50%;" %> </td>
           <% else %>
             <td>  </td>
           <% end %>
       <% end %>
       </tr>
     <% end %>
+    <tr bgcolor="#41B0FF"> 
+      <td colspan="10"> <center> SCREEN </center> </td>
+    </tr>
   </tbody>
 </table>
 
+</br>
 
-<%= link_to 'Edit', edit_room_path(@room) %> |
-<%= link_to 'Back', rooms_path %>
+<%= link_to 'Back to rooms', rooms_path, :class => "btn btn-outline-danger minebtn btn-sm" %>
+&nbsp;
+<%= link_to 'Edit', edit_room_path(@room), :class => "btn btn-outline-warning minebtn btn-sm" %> 
+

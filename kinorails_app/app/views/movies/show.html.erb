@@ -1,38 +1,65 @@
-<p id="notice"><%= notice %></p>
+<p id="notice"><%= modified_notice %></p>
+
+<h2> Details of "<%= @movie.title %>"</h2>
 
 <p>
   <strong>Title:</strong>
   <%= @movie.title %>
-</p>
-
-<p>
+  <br/>
   <strong>Director:</strong>
   <%= @movie.director %>
-</p>
-
-<p>
+  <br/>
   <strong>Country of origin:</strong>
   <%= @movie.country_of_origin %>
-</p>
-
-<p>
+  <br/>
   <strong>Length:</strong>
   <%= @movie.length %>
-</p>
-
-<p>
-  <strong>Poster link:</strong>
-  <%= @movie.poster_link %>
-</p>
-
-<p>
+  <br/>
   <strong>Description:</strong>
   <%= @movie.description %>
+  <br/>
+  <strong>Poster:</strong>
+  <br/>
+  <% if @movie.poster_link == "" %>
+    No poster attached!
+  <% else %>
+    <%= image_tag @movie.poster_link, :height => 200, :crop => "pad" %>
+    <br/>
+    <a href = "<%= @movie.poster_link %>" target="_blank">Full view</a>
+  <% end %>
+  <br/>
 </p>
+
+<br/>
+<%= link_to 'Back to movies', movies_path, :class => "btn btn-outline-danger minebtn btn-sm" %>
+<br/>
+<br/>
+
+<h3>Available screenings for "<%= @movie.title %>"</h3>
+
+<table class="table table-stripped table-hover index indexborder">
+  <thead>
+    <tr>
+      <th>Room</th>
+      <th>Date</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+  <% @screenings.each do |screening| %>
+      <tr>
+        <td>&#x2116; <%= screening.room_id %>, name: <%= screening.room.name %></td>
+        <td><%= screening.date.strftime("%d.%m.%Y %H:%M") %></td>   
+        <td align = "right"><%= link_to 'New Reservation', {:controller => "reservations", :action => "new", :current_screening_id => screening.id}, :class => "btn btn-outline-success minebtn btn-sm" %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
 
 <% if !current_user.nil? %>
   <% if current_user.admin? %>
-    <%= link_to 'Edit', edit_movie_path(@movie) %> |
+    <%= link_to 'Edit', edit_movie_path(@movie), :class => "btn btn-outline-warning minebtn btn-sm" %>
   <% end %>
 <% end %>
-<%= link_to 'Back', movies_path %>
+

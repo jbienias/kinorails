@@ -1,13 +1,19 @@
-<p id="notice"><%= notice %></p>
+<p id="notice"><%= modified_notice %></p>
 
-<h1>Reservations</h1>
+<% if !current_user.nil? && current_user.admin?%>
+  <h1>Reservations</h1>
+<%else %>
+  <h1> Your reservations</h1>
+<%end%>
 
-<table>
+<table class="table table-stripped table-hover index indexborder">
   <thead>
     <tr>
-      <th>User</th>
-      <th>Screening</th>
-      <th>Identifier</th>
+      <% if !current_user.nil? && current_user.admin?%>
+      <th class="index"><%= sort_link "user_id", "User" %></th>
+      <% end %>
+      <th class="index"><%= sort_link "screening_id" %></th>
+      <th class="index"><%= sort_link "identifier" %></th>
       <th colspan="3"></th>
     </tr>
   </thead>
@@ -15,15 +21,45 @@
   <tbody>
     <% @reservations.each do |reservation| %>
       <tr>
+      <% if !current_user.nil? && current_user.admin?%>
         <% if reservation.user_id == NIL %>
           <td>Guest</td>
         <% else %>
           <td><%= reservation.user.username  %></td>
         <%end%>
-        <td><%= reservation.screening_id %></td>
+      <% end %>
+        <td><%= reservation.screening.movie.title %> </br>
+            Room &#x2116; <%=reservation.screening.room.id.to_s + ", name: " + reservation.screening.room.name %> </br>
+            <%= "Date: " + reservation.screening.date.strftime("%d.%m.%Y %H:%M") %></td>
         <td><%= reservation.identifier %></td>
-        <td><%= link_to 'Show', reservation %></td>
-        <td><%= link_to 'Destroy', reservation, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        <td align = "right">
+          <% if !current_user.nil? && current_user.user? %>
+            <%= link_to(raw('<span class="fa fa-eye"></span>'), reservation, :class => "btn btn-outline-secondary minebtn btn-sm") %>  
+          <% end %>
+          &nbsp;
+          <button type="button" class="btn btn-outline-danger minebtn btn-sm" data-toggle="modal" data-target="#modalDelete<%= reservation.identifier %>"><span class="fa fa-times"></span></button>
+
+            <!-- modalDelete -->
+            <div class="modal fade" id="modalDelete<%= reservation.identifier %>" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+              <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <h4 class="modal-title" id="myModalLabel">Delete confirmation</h4>
+                  </div>
+                  <div class="modal-body">
+                    Are you sure you want to delete this reservation: <br/>
+                    <%= reservation.identifier %> for <%= reservation.screening.movie.title %>?
+                  </div>
+                  <div class="modal-footer">
+                    <button type="button" class="btn btn-outline-secondary minebtn btn-sm" data-dismiss="modal">No</button>
+                    <%= link_to 'Delete', reservation, method: :delete, :class => "btn btn-outline-danger minebtn btn-sm" %>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <!-- end of modalDelete -->
+
+        </td>
       </tr>
     <% end %>
   </tbody>
