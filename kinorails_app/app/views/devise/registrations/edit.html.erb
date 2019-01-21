@@ -44,10 +44,10 @@
         <% end %>
 
         <div class="field">
-          <%= f.label :password %> <i class = "tip">(leave if you don't want to change it)</i><br />
+          <%= f.label :password %> <small class = "tip">(leave if you don't want to change it)</small><br />
           <%= f.password_field :password, autocomplete: "new-password", class: 'form-control-smaller' %>
           <% if @minimum_password_length %>
-            <i class = "tip"><%= @minimum_password_length %> characters minimum</i>
+            <small class = "tip"><%= @minimum_password_length %> characters minimum</small>
           <% end %>
         </div>
 
@@ -57,7 +57,7 @@
         </div>
 
         <div class="field">
-          <%= f.label :current_password %> <i class = "tip">(we need your current password to confirm your changes)</i><br />
+          <%= f.label :current_password %> <small class = "tip">(we need your current password to confirm your changes)</small><br />
           <%= f.password_field :current_password, autocomplete: "current-password", class: 'form-control-smaller' %>
         </div>
       

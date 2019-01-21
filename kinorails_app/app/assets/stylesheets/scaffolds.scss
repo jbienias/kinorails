@@ -356,6 +356,10 @@ label.check {
 i.tip {
   color: #7C7C7C;
 }
+
+small.tip {
+  color: #7C7C7C;
+}
 // end
 
  caption {
@@ -2185,6 +2189,7 @@ i.tip {
   transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out, -webkit-box-shadow 0.15s ease-in-out;
 }
 
+// eg edit profile
 .form-control-smaller {
   display: block;
   width: 60%;
