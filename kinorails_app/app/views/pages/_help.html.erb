@@ -1,12 +1,12 @@
 <p id="notice"><%= notice %></p>
 
-<b> Witamy na stronie KinoRails </b>
+<b> Hello @ KinoRails </b>
 
 <% if user_signed_in? %>
   <% if current_user.user? %>
-    <p> Jesteś user </p>
+    <p> You're an user. You have access to movies' list and its screenings, you can see movie detalis, favourite a movie, make or delete your reservation for a screening.</p>
   <% end %>
   <% if current_user.admin? %>
-    <p> Jesteś admin </p>
+    <p> You're an admin. You can do basically anything except to have fun in our cinema. Work hard! </p>
   <% end %>
 <% end %>

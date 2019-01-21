@@ -1,38 +1,33 @@
 <p id="notice"><%= notice %></p>
 
+<h2> Details of "<%= @movie.title %>"</h2>
+
 <p>
   <strong>Title:</strong>
   <%= @movie.title %>
-</p>
-
-<p>
+  <br/>
   <strong>Director:</strong>
   <%= @movie.director %>
-</p>
-
-<p>
+  <br/>
   <strong>Country of origin:</strong>
   <%= @movie.country_of_origin %>
-</p>
-
-<p>
+  <br/>
   <strong>Length:</strong>
   <%= @movie.length %>
-</p>
-
-<p>
-  <strong>Poster link:</strong>
-  <%= @movie.poster_link %>
-</p>
-
-<p>
+  <br/>
+  <strong>Poster:</strong>
+  <br/>
+  <%= image_tag @movie.poster_link, :height => 200, :crop => "pad" %>
+  <br/>
+  <a href = "<%= @movie.poster_link %>">Full view</a>
+  <br/>
   <strong>Description:</strong>
   <%= @movie.description %>
 </p>
 
-<b>Available screenings for <%= @movie.title %></b>
+<h3>Available screenings for "<%= @movie.title %>"</h3>
 
-<table>
+<table class="table table-stripped table-hover index indexborder">
   <thead>
     <tr>
       <th>Room</th>
@@ -46,7 +41,7 @@
       <tr>
         <td><%= screening.room_id %></td>
         <td><%= screening.date %></td>   
-        <td><%= link_to 'New Reservation', {:controller => "reservations", :action => "new", :current_screening_id => screening.id}, :class => "btn btn-outline-success minebtn btn-sm" %></td>
+        <td align = "right"><%= link_to 'New Reservation', {:controller => "reservations", :action => "new", :current_screening_id => screening.id}, :class => "btn btn-outline-success minebtn btn-sm" %></td>
       </tr>
     <% end %>
   </tbody>
