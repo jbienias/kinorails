@@ -291,14 +291,7 @@ input[type=checkbox] {
   top: -9999px;
   left: -9999px;
 }
-label { 
- -webkit-appearance: push-button;
- -moz-appearance: button; 
- display: block;
- margin: 0 0 0 0;
- cursor: pointer;
- align-self: center;
-}
+
 
 /* Default State */
 p.check {
@@ -321,6 +314,11 @@ label.check {
   color: #303030;
   align-self: center;
   opacity: 0;
+
+  -webkit-appearance: push-button;
+  -moz-appearance: button; 
+  display: block;
+  margin: 0 0 0 0;
 }
 // end
 

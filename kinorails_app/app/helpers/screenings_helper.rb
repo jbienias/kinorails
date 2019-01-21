@@ -16,4 +16,19 @@ module ScreeningsHelper
         "<span class='fa fa-caret-down'></span>".html_safe
       end
     end
+
+    # notice
+    def modified_notice
+      if notice == nil
+        "".html_safe
+      else
+        add_edit_action_notice
+      end
+    end
+  
+    def add_edit_action_notice
+    "<div class='alert alert-success alert-dismissible'>
+      <strong> #{notice} </strong>
+    </div>".html_safe
+    end
 end
