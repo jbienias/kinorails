@@ -26,7 +26,27 @@
           <% if false %>
             <%= link_to 'New Reservation', {:controller => "reservations", :action => "new", :current_screening_id => screening.id}, :class => "btn btn-outline-success minebtn btn-sm" %>
           <% end %>
-          <%= link_to(raw('<span class="fa fa-times"></span>'), screening, method: :delete, data: { confirm: 'Are you sure?' }, :class => "btn btn-outline-danger minebtn btn-sm") %>
+          <button type="button" class="btn btn-outline-danger minebtn btn-sm" data-toggle="modal" data-target="#modalDelete<%= screening.movie.id %>"><span class="fa fa-times"></span></button>
+
+            <!-- modalDelete -->
+            <div class="modal fade" id="modalDelete<%= screening.movie.id %>" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+              <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <h4 class="modal-title" id="myModalLabel">Delete confirmation</h4>
+                  </div>
+                  <div class="modal-body">
+                    Are you sure you want to delete this movie: <br/>
+                    '<%= screening.movie.title %>' in  <%= "Room no.: " + screening.room.id.to_s + ", name: " + screening.room.name %> at <%= screening.date %>?
+                  </div>
+                  <div class="modal-footer">
+                    <button type="button" class="btn btn-outline-secondary minebtn btn-sm" data-dismiss="modal">No</button>
+                    <%= link_to 'Delete', screening, method: :delete, :class => "btn btn-outline-danger minebtn btn-sm" %>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <!-- end of modalDelete -->
         </td>
       </tr>
     <% end %>

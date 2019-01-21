@@ -17,7 +17,28 @@
         <td align = "right">
           <%= link_to(raw('<span class="fa fa-eye"></span>'), room, :class => "btn btn-outline-secondary minebtn btn-sm") %> 
           &nbsp;
-          <%= link_to(raw('<span class="fa fa-times"></span>'), room, method: :delete, data: { confirm: 'Are you sure?' }, :class => "btn btn-outline-danger minebtn btn-sm") %>
+          <button type="button" class="btn btn-outline-danger minebtn btn-sm" data-toggle="modal" data-target="#modalDelete<%= room.name %>"><span class="fa fa-times"></span></button>
+
+            <!-- modalDelete -->
+            <div class="modal fade" id="modalDelete<%= room.name %>" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+              <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <h4 class="modal-title" id="myModalLabel">Delete confirmation</h4>
+                  </div>
+                  <div class="modal-body">
+                    Are you sure you want to delete this room: <br/>
+                    <%= room.name %>?
+                  </div>
+                  <div class="modal-footer">
+                    <button type="button" class="btn btn-outline-secondary minebtn btn-sm" data-dismiss="modal">No</button>
+                    <%= link_to 'Delete', room, method: :delete, :class => "btn btn-outline-danger minebtn btn-sm" %>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <!-- end of modalDelete -->
+
         </td>
       </tr>
     <% end %>
