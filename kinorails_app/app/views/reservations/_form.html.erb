@@ -1,11 +1,11 @@
 <%= form_with(model: reservation, local: true) do |form| %>
   <% if reservation.errors.any? %>
     <div id="error_explanation">
-      <h2><%= pluralize(reservation.errors.count, "error") %> prohibited this reservation from being saved:</h2>
+      <h2 class="error_explanation"><%= pluralize(reservation.errors.count, "error") %> prohibited this reservation from being saved:</h2>
 
       <ul>
       <% reservation.errors.full_messages.each do |message| %>
-        <li><%= message %></li>
+        <li class="error_explanation"><%= message %></li>
       <% end %>
       </ul>
     </div>
@@ -76,7 +76,7 @@
   <%= f.hidden_field :reservation, :value => @reservation %>
   <%= f.hidden_field :screening_id, :value => @screening.id %>
   <div class="actions">
-    <%= f.button  :submit, name: "screening_id", value: @screening.id, :class => "btn btn-outline-success minebtn btn-sm" %>
+    <%= f.button  :submit, name: "screening_id", value: @screening.id, :class => "btn btn-outline-success minebtn btn-sm" %> &nbsp; <%= link_to 'Back to reservations', reservations_path, :class => "btn btn-outline-danger minebtn btn-sm" %>
   </div>
   <% end %>
 <% end %>

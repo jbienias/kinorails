@@ -261,6 +261,7 @@ td.editaccount {
   vertical-align: top;
   padding: 0px;
 }
+
 // font awesome
 span {
 font-family: fontawesome !important;
@@ -269,6 +270,7 @@ font-family: fontawesome !important;
 span.star {
   color: #BE7D16
 }
+
 // div in navbar
 div.divrightoriented {
   text-align: right;
@@ -282,6 +284,12 @@ div.divrightoriented {
 // navbar
 nav.mynavbar {
 height: 75px;
+}
+
+// errosrs are pretty too
+.error_explanation {
+  color: #F28576;
+  font-family: "Montserrat", -apple-system, system-ui, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
 }
 
 // invert colors of an image

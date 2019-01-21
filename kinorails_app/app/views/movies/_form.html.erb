@@ -1,11 +1,11 @@
 <%= form_with(model: movie, local: true) do |form| %>
   <% if movie.errors.any? %>
     <div id="error_explanation">
-      <h2><%= pluralize(movie.errors.count, "error") %> prohibited this movie from being saved:</h2>
+      <h2 class="error_explanation"><%= pluralize(movie.errors.count, "error") %> prohibited this movie from being saved:</h2>
 
       <ul>
       <% movie.errors.full_messages.each do |message| %>
-        <li><%= message %></li>
+        <li class="error_explanation"><%= message %></li>
       <% end %>
       </ul>
     </div>
@@ -49,6 +49,6 @@
   </table>
 
   <div class="actions">
-    <%= form.submit "Submit", :class => "btn btn-outline-success minebtn btn-sm" %> &nbsp; <%= link_to 'Back', movies_path, :class => "btn btn-outline-danger minebtn btn-sm" %>
+    <%= form.submit "Submit", :class => "btn btn-outline-success minebtn btn-sm" %> &nbsp; <%= link_to 'Back to movies', movies_path, :class => "btn btn-outline-danger minebtn btn-sm" %>
   </div>
 <% end %>

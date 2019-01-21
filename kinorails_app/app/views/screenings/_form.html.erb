@@ -1,11 +1,11 @@
 <%= form_with(model: screening, local: true) do |form| %>
   <% if screening.errors.any? %>
     <div id="error_explanation">
-      <h2><%= pluralize(screening.errors.count, "error") %> prohibited this screening from being saved:</h2>
+      <h2 class="error_explanation"><%= pluralize(screening.errors.count, "error") %> prohibited this screening from being saved:</h2>
 
       <ul>
       <% screening.errors.full_messages.each do |message| %>
-        <li><%= message %></li>
+        <li class="error_explanation"><%= message %></li>
       <% end %>
       </ul>
     </div>
@@ -34,6 +34,6 @@
     </tr>
   </table>
     
-  <%= form.submit "Submit", :class => "btn btn-outline-success minebtn btn-sm" %> &nbsp; <%= link_to 'Back', screenings_path, :class => "btn btn-outline-danger minebtn btn-sm" %>
+  <%= form.submit "Submit", :class => "btn btn-outline-success minebtn btn-sm" %> &nbsp; <%= link_to 'Back to screenings', screenings_path, :class => "btn btn-outline-danger minebtn btn-sm" %>
 
 <% end %>
