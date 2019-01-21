@@ -16,7 +16,7 @@
       <tr>
         <td><%= favourite_movie.user.username %></td>
         <td><%= favourite_movie.movie.title %></td>
-        <td align = "right"><%= link_to 'Destroy', favourite_movie, method: :delete, data: { confirm: 'Are you sure?' }, :class => "btn btn-outline-danger minebtn btn-sm" %></td>
+        <td align = "right"><%= link_to(raw('<span class="fa fa-times"></span>'), favourite_movie, method: :delete, data: { confirm: 'Are you sure?' }, :class => "btn btn-outline-danger minebtn btn-sm") %></td>
       </tr>
     <% end %>
   </tbody>

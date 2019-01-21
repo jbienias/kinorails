@@ -15,9 +15,9 @@
       <tr>
         <td><%= room.name %></td>
         <td align = "right">
-          <%= link_to 'Show', room, :class => "btn btn-outline-secondary minebtn btn-sm" %> 
+          <%= link_to(raw('<span class="fa fa-eye"></span>'), room, :class => "btn btn-outline-secondary minebtn btn-sm") %> 
           &nbsp;
-          <%= link_to 'Destroy', room, method: :delete, data: { confirm: 'Are you sure?' }, :class => "btn btn-outline-danger minebtn btn-sm" %>
+          <%= link_to(raw('<span class="fa fa-times"></span>'), room, method: :delete, data: { confirm: 'Are you sure?' }, :class => "btn btn-outline-danger minebtn btn-sm") %>
         </td>
       </tr>
     <% end %>

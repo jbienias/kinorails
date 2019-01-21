@@ -34,10 +34,10 @@
         <td><%= reservation.identifier %></td>
         <td align = "right">
           <% if !current_user.nil? && current_user.user? %>
-            <%= link_to 'Show', reservation, :class => "btn btn-outline-secondary minebtn btn-sm" %>  
+            <%= link_to(raw('<span class="fa fa-eye"></span>'), reservation, :class => "btn btn-outline-secondary minebtn btn-sm") %>  
           <% end %>
           &nbsp;
-          <%= link_to 'Destroy', reservation, method: :delete, data: { confirm: 'Are you sure?' }, :class => "btn btn-outline-danger minebtn btn-sm" %>
+          <%= link_to(raw('<span class="fa fa-times"></span>'), reservation, method: :delete, data: { confirm: 'Are you sure?' }, :class => "btn btn-outline-danger minebtn btn-sm") %>
         </td>
       </tr>
     <% end %>
