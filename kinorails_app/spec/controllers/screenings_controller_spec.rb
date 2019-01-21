@@ -42,6 +42,7 @@ RSpec.describe ScreeningsController, type: :controller do
     end
 
     it 'renders the #index template' do
+      sign_in @user_admin
       get :index
       expect(response).to render_template('index')
     end

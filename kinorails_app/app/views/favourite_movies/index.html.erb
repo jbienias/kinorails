@@ -5,7 +5,6 @@
 <table class="table table-stripped table-hover index indexborder">
   <thead>
     <tr>
-      <th class="index"><%= sort_link "user_id", "User" %></th>
       <th class="index"><%= sort_link "movie_id", "Movie" %></th>
       <th colspan="3"></th>
     </tr>
@@ -14,7 +13,6 @@
   <tbody>
     <% @favourite_movies.each do |favourite_movie| %>
       <tr>
-        <td><%= favourite_movie.user.username %></td>
         <td><%= favourite_movie.movie.title %></td>
         <td align = "right">
         <button type="button" class="btn btn-outline-danger minebtn btn-sm" data-toggle="modal" data-target="#modalDelete<%= favourite_movie.movie.id %>"><span class="fa fa-times"></span></button>
