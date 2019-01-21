@@ -19,6 +19,13 @@ class MoviesController < ApplicationController
 
   def new
     @movie = Movie.new
+
+    respond_to do |format|
+
+      format.html
+  
+      format.js
+    end
   end
 
   def edit

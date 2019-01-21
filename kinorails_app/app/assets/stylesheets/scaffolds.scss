@@ -286,7 +286,7 @@ nav.mynavbar {
 height: 75px;
 }
 
-// errosrs are pretty too
+// errors are pretty too
 .error_explanation {
   color: #F28576;
   font-family: "Montserrat", -apple-system, system-ui, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
@@ -6118,6 +6118,10 @@ label.check {
    width: auto;
    margin: 0.5rem;
    pointer-events: none;
+   display: table; /* This is important */ 
+   overflow-y: auto;    
+   overflow-x: auto;
+   min-width: 300px;   
  }
  
  .modal.fade .modal-dialog {

@@ -50,7 +50,22 @@
         <td><%= movie.title %></td>
         <td><%= movie.director %></td>
         <td><%= movie.length %></td>
-        <td><%= image_tag movie.poster_link, :height => 50, :crop => "pad" %></td> 
+        <td> <a data-toggle="modal" href="#myModal" + "<%=" + movie.title + "%>"> 
+        <%= image_tag movie.poster_link, :height => 50, :crop => "pad" %> </a> </td> 
+
+        <div class="modal fade autoModal" id="myModal" + "<%=" + movie.title + "%>" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+            <div class="modal-dialog autoModal" role="document">
+              <div class="modal-content autoModal">
+                <div class="modal-header autoModal">
+                  <h4 class="modal-title" id="myModalLabel"><b><%= movie.title %></b>'s poster close-up</h4>
+                </div>
+                <div class="modal-body autoModal">
+                <%= image_tag movie.poster_link %>
+                </div>
+              </div>
+            </div>
+          </div>
+
         <td align = "right">
           <%= link_to(raw('<span class="fa fa-eye"></span>'), movie, :class => "btn btn-outline-secondary minebtn btn-sm") %>
           &nbsp; 
@@ -73,3 +88,5 @@
 <% if !current_user.nil? && current_user.admin? %>
   <%= link_to(raw('<b>New Movie</b><span class="fa fa-plus"></span>'), new_movie_path, :class => "btn btn-outline-success minebtn btn-sm") %>
 <% end %>
+
+
