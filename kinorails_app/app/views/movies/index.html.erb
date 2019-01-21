@@ -20,10 +20,10 @@
         <%= form_tag(movies_path, :method => "get", id: "search-form") do %>
           <%= text_field_tag :search, params[:search], placeholder: "Search for games" %>
             <div class="btn-group minebtn btn-sm" role="group">
-              <%= button_tag(type: 'submit', class: "btn btn-primary minebtn btn-sm") do %>
+              <%= button_tag(type: 'submit', class: "btn btn-outline-primary minebtn btn-sm") do %>
                 <span class='fa fa-search'></span>
               <% end %>
-              <%= link_to(raw('<span class="fa fa-times"></span>'), movies_path, class: 'btn btn-danger minebtn btn-sm') %>
+              <%= link_to(raw('<span class="fa fa-times"></span>'), movies_path, class: 'btn btn-outline-danger minebtn btn-sm') %>
             </div>
           <% end %>
           <% if @movies.blank? && Movie.count != 0 %>
