@@ -218,7 +218,24 @@
    border-collapse: collapse;
  }
  
- // my mods
+ // table with header and search
+ .search {
+  width: 100%;
+}
+
+.btn-custom {
+  background-color: #C7C7C7;
+  border-color: #C7C7C7;
+  color: #C7C7C7;
+}
+
+.btn-custom:hover {
+  background-color: #B0B0B0;
+  border-color: #B0B0B0;
+  color: #C7C7C7;
+}
+
+ // table content width
  .index {
   width: 20%;
 }

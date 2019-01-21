@@ -22,6 +22,6 @@ class Movie < ApplicationRecord
 
   private
     def self.search(search)
-      where("name LIKE ?", "%#{search}%") # ILIKE on postgreSQL and Heroku, LIKE on local
+      where("title LIKE ?", "%#{search}%") # ILIKE on postgreSQL and Heroku, LIKE on local
     end
 end

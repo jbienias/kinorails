@@ -1,6 +1,42 @@
 <p id="notice"><%= modified_notice %></p>
 
-<h1>Movies</h1>
+<div class="divrightoriented">
+      
+    </div>
+
+<table class="search">
+  <thead>
+    <tr>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>
+        <h1>Movies</h1>
+      </td>
+      <td align = "right">
+        <%= form_tag(movies_path, :method => "get", id: "search-form") do %>
+          <%= text_field_tag :search, params[:search], placeholder: "Search for games" %>
+            <div class="btn-group minebtn btn-sm" role="group">
+              <%= button_tag(type: 'submit', class: "btn btn-primary minebtn btn-sm") do %>
+                <span class='fa fa-search'></span>
+              <% end %>
+              <%= link_to(raw('<span class="fa fa-times"></span>'), movies_path, class: 'btn btn-danger minebtn btn-sm') %>
+            </div>
+          <% end %>
+          <% if @movies.blank? && Movie.count != 0 %>
+            There are no games which name contains '<%= params[:search] %>' &emsp;
+          <% end %>
+          <% if Movie.count == 0 %>
+            There are no games &emsp;
+          <% end %>
+      </td>
+    </tr>
+  </tbody>
+</table>
+
 
 <table class="table table-stripped table-hover index indexborder">
   <thead>
