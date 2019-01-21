@@ -218,7 +218,8 @@
    border-collapse: collapse;
  }
  
- // table with header and search
+ // własne
+ // table with header and search, eg. Movie
  .search {
   width: 100%;
 }
@@ -235,11 +236,12 @@
   color: #C7C7C7;
 }
 
- // table content width
+ // table content width on all tables
  .index {
   width: 20%;
 }
 
+// table side borders
 // .indexborder {
 //   border-right:2px solid #444444;
 //   border-left:2px solid #444444;
@@ -254,21 +256,17 @@ th {
   text-align: inherit;
 }
 
-td.editaccount {
-  vertical-align: top;
-  padding: 0px;
-}
-
-// td siedzenia 
+// td chairs !important
 td.customwidth {
   width: 100px;
 }
 
-// font awesome
+// font awesome usage
 span {
 font-family: fontawesome !important;
 }
 
+// font awesome fav movie button star
 span.star {
   color: #BE7D16
 }
@@ -283,12 +281,7 @@ div.divrightoriented {
   font-size: 1rem;
 }
 
-// navbar
-nav.mynavbar {
-height: 75px;
-}
-
-// errors are pretty too
+// errors are pretty too, erros in red and big
 .error_explanation {
   color: #F28576;
   font-family: "Montserrat", -apple-system, system-ui, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
@@ -310,7 +303,7 @@ img-inverted {
   color: #7F7F7F;
 }
 
-// p warning guest 
+// p warning about writing deatils for guest 
 p.warning {
   font: bold;
   color: red;
@@ -318,22 +311,13 @@ p.warning {
   text-align: center;
 }
 
-// p and table with margin to center
-.custommargin {
-  margin-left:auto;
-    margin-right:auto;
-   width:50%;
-}
-
 // chairs
 /* Checkbox Hack */
-
 input[type=checkbox] {
   position: absolute;
   //top: -9999px;
   left: -9999px;
 }
-
 
 /* Default State */
 p.check {
@@ -363,11 +347,15 @@ label.check {
   margin: 0 0 0 0;
 }
 
-// custom link
+// custom color link override
 .navbar-link {
   color: #BF4556;
 }
 
+// tips in form edit eg
+i.tip {
+  color: #7C7C7C;
+}
 // end
 
  caption {
@@ -2178,6 +2166,44 @@ label.check {
    transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
    transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out, -webkit-box-shadow 0.15s ease-in-out;
  }
+
+ // własne
+ .form-control-date {
+  height: calc(2.15625rem + 2px);
+  padding: 0.375rem 0.75rem;
+  font-size: 0.9375rem;
+  font-weight: 400;
+  line-height: 1.5;
+  color: #444;
+  background-color: #fff;
+  background-clip: padding-box;
+  border: 1px solid transparent;
+  border-radius: 0.25rem;
+  -webkit-transition: border-color 0.15s ease-in-out, -webkit-box-shadow 0.15s ease-in-out;
+  transition: border-color 0.15s ease-in-out, -webkit-box-shadow 0.15s ease-in-out;
+  transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+  transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out, -webkit-box-shadow 0.15s ease-in-out;
+}
+
+.form-control-smaller {
+  display: block;
+  width: 60%;
+  height: calc(2.15625rem + 2px);
+  padding: 0.375rem 0.75rem;
+  font-size: 0.9375rem;
+  font-weight: 400;
+  line-height: 1.5;
+  color: #444;
+  background-color: #fff;
+  background-clip: padding-box;
+  border: 1px solid transparent;
+  border-radius: 0.25rem;
+  -webkit-transition: border-color 0.15s ease-in-out, -webkit-box-shadow 0.15s ease-in-out;
+  transition: border-color 0.15s ease-in-out, -webkit-box-shadow 0.15s ease-in-out;
+  transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+  transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out, -webkit-box-shadow 0.15s ease-in-out;
+}
+ // end
  
  @media screen and (prefers-reduced-motion: reduce) {
    .form-control {
