@@ -23,10 +23,10 @@
             </div>
           <% end %>
           <% if @movies.blank? && Movie.count != 0 %>
-            There are no movies which title contains '<%= params[:search] %>' &emsp;
+            <p class = "tip">There are no movies which title contains '<%= params[:search] %>' &nbsp; </p>
           <% end %>
           <% if Movie.count == 0 %>
-            There are no movies &emsp;
+            <p class = "tip">There are no movies &nbsp; </p>
           <% end %>
       </td>
     </tr>
