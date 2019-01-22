@@ -13,7 +13,11 @@
   <tbody>
     <% @favourite_movies.each do |favourite_movie| %>
       <tr>
-        <td><%= favourite_movie.movie.title %></td>
+        <td> 
+          <% if favourite_movie.movie.present? %>
+            <%= link_to favourite_movie.movie.title, favourite_movie.movie %>
+          <% end %>
+        </td>
         <td align = "right">
         <button type="button" class="btn btn-outline-danger minebtn btn-sm" data-toggle="modal" data-target="#modalDelete<%= favourite_movie.movie.id %>"><span class="fa fa-times"></span></button>
         </td>

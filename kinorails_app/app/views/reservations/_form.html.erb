@@ -12,23 +12,20 @@
   <% end %>
 
 
-  <strong> Reservation for... </strong>
+  <p>
+    <strong> Reservation for... </strong>
+  </p>
+
   <p>
     <strong>Screening ID:</strong>
     <%= @screening.id %>
-  </p>
-
-  <p>
+    <br/>
     <strong>Movie:</strong>
     <%= @screening.movie.title %>
-  </p>
-
-  <p>
+    <br/>
     <strong>Room:</strong>
     <%= @screening.room.name %>
-  </p>
-
-  <p>
+    <br/>
     <strong>Date:</strong>
     <%= @screening.date %>
   </p>
