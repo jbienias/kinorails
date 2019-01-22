@@ -1,14 +1,42 @@
 <p id="notice"><%= modified_notice %></p>
 
-<b> Hello @ KinoRails </b>
+<div class="jumbotron">
+  <h1 class="display-5">Hello @ <font color = "#BF4556">KinoRails!</font></h1>
+  <p class="lead">
+    <% if user_signed_in? %>
+      <% if current_user.user? %>
+        Your accout has a range <span class='fa fa-user role'></span> <i>user</i>.
+      <% end %>
+      <% if current_user.admin? %>
+        Your accout has a range <span class='fa fa-wrench role'></span> <i>admin</i>.
+      <% end %>
+    <% else %>
+    Your accout has a range <span class='fa fa-question role'></span> <i>guest</i>.
+    <% end %>
+  </p>
+  <hr class="my-4">
+  <p>
+    <% if user_signed_in? %>
+      <% if current_user.user? %>
+        You have access to movies' list and its screenings, you can see movie detalis, favourite a movie, make or delete your reservation for a screening.
+      <% end %>
+      <% if current_user.admin? %>
+        You can do basically anything except to have fun in our cinema. Work hard!
+      <% end %>
+    <% else %>
+      You have access to movies' list, it's screenings and you can make a reservation. For further optios consider registration.
+    <% end %>
+  </p>
 
-<% if user_signed_in? %>
-  <% if current_user.user? %>
-    <p> You're an user. You have access to movies' list and its screenings, you can see movie detalis, favourite a movie, make or delete your reservation for a screening.</p>
-  <% end %>
-  <% if current_user.admin? %>
-    <p> You're an admin. You can do basically anything except to have fun in our cinema. Work hard! </p>
-  <% end %>
-<% else %>
-    <p> You're a guest. You have access to movies' list, it's screenings and you can make a reservation. For further optios consider registration. </p>
-<% end %>
+  <p class="lead">
+    <% if user_signed_in? %>
+      <% if current_user.user? %>
+      <%= link_to 'Go to movies list!', movies_path %>
+      <% end %>
+      <% if current_user.admin? %>
+      <% end %>
+    <% else %>
+      <%= link_to 'Go to movies list!', movies_path %>
+    <% end %>
+  </p>
+</div>

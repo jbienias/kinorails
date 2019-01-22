@@ -225,15 +225,15 @@
 }
 
 .btn-custom {
-  background-color: #C7C7C7;
-  border-color: #C7C7C7;
-  color: #C7C7C7;
+  color: #ffffff;
+  background-color: #BF4556;
+  border-color: #BF4556;
 }
 
 .btn-custom:hover {
-  background-color: #B0B0B0;
-  border-color: #B0B0B0;
-  color: #C7C7C7;
+  color: #ffffff;
+  background-color: #B0404F;
+  border-color: #B0404F;
 }
 
  // table content width on all tables
@@ -268,7 +268,12 @@ font-family: fontawesome !important;
 
 // font awesome fav movie button star
 span.star {
-  color: #BE7D16
+  color: #BE7D16;
+}
+
+// font awesome role icon in hello
+span.role {
+  color: #BF4556;
 }
 
 // div in navbar
@@ -5637,7 +5642,7 @@ label.check {
  
  @media (min-width: 576px) {
    .jumbotron {
-     padding: 4rem 2rem;
+     padding: 2rem 2rem;
    }
  }
  
