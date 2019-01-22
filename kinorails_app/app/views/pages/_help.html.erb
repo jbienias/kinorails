@@ -18,13 +18,13 @@
   <p>
     <% if user_signed_in? %>
       <% if current_user.user? %>
-        You have access to movies' list and its screenings, you can see movie detalis, favourite a movie, make or delete your reservation for a screening.
+        You have access to movies list and its screenings, you can see movie detalis, favourite a movie, make or delete your reservation for a screening.
       <% end %>
       <% if current_user.admin? %>
         You can do basically anything except to have fun in our cinema. Work hard!
       <% end %>
     <% else %>
-      You have access to movies' list, it's screenings and you can make a reservation. For further optios consider registration.
+      You have access to movies list, it's screenings and you can make a reservation. For further optios consider registration.
     <% end %>
   </p>
 
@@ -40,3 +40,23 @@
     <% end %>
   </p>
 </div>
+
+<div class="jumbotron">
+  <h1 class="display-5">Here are some of our latest hits!</h1>
+  <p class="lead">
+    Some hot stuff! Check it out by clicking on a poster!
+  </p>
+  <hr class="my-4">
+  <div class="row">
+    <% @movies_selected.each do |movie| %>
+      <div class="block image">
+        <%= link_to image_tag(movie.poster_link, :border=>0, :class => 'resize'), 
+            :action => 'show', :controller => 'movies', :id => movie.id%>
+          <span><% movie.title.to_s %> </span>
+        </a>
+      </div>
+    <% end %>
+  </div>
+</div>
+
+

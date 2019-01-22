@@ -303,6 +303,29 @@ img-inverted {
   filter: invert(100%);
 }
 
+// resize image
+img.resize {
+  max-width:100%;
+  max-height:100%;
+}
+
+// movie gallery containers
+div.image {
+  width: 320px;
+  height: 480px;
+}
+
+.row {
+  width: 100%;
+  margin: 0 auto;
+}
+
+.block {
+  width: 100px;
+  float: left;
+  margin: 15px 15px 15px 15px;
+}
+
 // footer
 .customfooter {
   text-align: center;

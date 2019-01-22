@@ -48,7 +48,7 @@
   </thead>
 
   <tbody>
-  <% @screenings.each do |screening| %>
+    <% @screenings.each do |screening| %>
       <tr>
         <td>&#x2116; <%= screening.room_id %>, name: <%= screening.room.name %></td>
         <td><%= screening.date.strftime("%d.%m.%Y %H:%M") %></td>   
